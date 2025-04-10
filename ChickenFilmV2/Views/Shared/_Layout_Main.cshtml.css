@@ -1,0 +1,43 @@
+﻿.container {
+    width: 100vw;
+}
+
+.header {
+    background-color: #901D1D;
+    height: 100px;
+}
+
+.header-logo {
+    height: 100px;
+}
+
+.header-text1 {
+    margin-left: auto;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    background-color: #000000;
+    padding: 0 140px;
+}
+
+.footer-content {
+    color: white;
+    width: fit-content;
+}
+
+.footer-logo {
+    height: 200px;
+}
+
+.footer-col {
+    padding: 60px 0;
+}
+
+.footer-col-logo {
+    justify-items: center;
+    border-left: 1px solid white;
+}
