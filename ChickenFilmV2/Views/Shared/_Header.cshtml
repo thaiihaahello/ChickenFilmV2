@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SixChickenFilm</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SixChickenFilm.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark header">
+            <div class="container-fluid row">
+                <a class="navbar-brand col-md-2" href="#">
+                    <img src="Images/Logo.png" alt="Logo" class="rounded-pill header-logo">
+                </a>
+                <div class="collapse navbar-collapse col-md-10 row" id="mynavbar">
+                    <ul class="navbar-nav col-md-7 row">
+                        <li class="nav-item col-md-2">
+                            <a class="nav-link" href="javascript:void(0)">Mua vé</a>
+                        </li>
+                        <li class="nav-item col-md-2">
+                            <div class="dropdown">
+                                <button type="button" class="btn nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    Phim
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="#">PHIM ĐANG CHIẾU</a>
+                                        <img src="images/Logo.png" alt="" class="header-logo">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">PHIM SẮP CHIẾU</a>
+                                        <img src="images/Logo.png" alt="" class="header-logo">
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item col-md-3">
+                            <a class="nav-link" href="javascript:void(0)">Thông báo</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex col-md-3">
+                        <input class="form-control me-2" type="text" placeholder="Search">
+                        <button class="btn btn-danger" type="button">Search</button>
+                    </form>
+                    <ul class="navbar-nav col-md-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">Đăng nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">Đăng kí</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - SixChickenFilm - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

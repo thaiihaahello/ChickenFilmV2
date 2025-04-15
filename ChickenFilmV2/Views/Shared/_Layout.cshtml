@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="~/css/FilmManagement.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Movies/FilmManagement.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Movies/IndexMovie.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Movies/CreateMovie.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ChickenFilmV2.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
@@ -22,6 +25,12 @@
             @RenderBody()
         </main>
     </div>
+  
+  <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - SixChickenFilm - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
     <script>
         function loadComponent(id, file, callback) {
             fetch(file)

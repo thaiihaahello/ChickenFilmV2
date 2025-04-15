@@ -1,0 +1,111 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Thanh toán vé xem phim";
+    Layout = "~/Views/Shared/_Layout_Main.cshtml";
+}
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Payment.css" />
+}
+
+<div class="container mt-3">
+    <div class="row text-center fw-bold">
+        <div class="col step" id="step1">Chọn phim/Rạp/Suất</div>
+        <div class="col step" id="step2">Chọn ghế</div>
+        <div class="col step" id="step3">Khuyến mãi</div>
+        <div class="col step" id="step4">Thanh toán</div>
+        <div class="col step" id="step5">Xác nhận</div>
+    </div>
+    <div class="progress mt-1">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Phần nhập mã khuyến mãi + Phương thức thanh toán -->
+        <div class="col-md-6 offset-md-1">
+            <div class="card p-3">
+                <h5>Khuyến mãi</h5>
+                <input type="text" class="form-control mb-2" placeholder="Mã khuyến mãi" />
+                <button class="btn apply-btn">Áp dụng</button>
+                <p class="text-muted mt-2">
+                    Lưu ý: Chỉ có thể áp dụng 1 voucher vào 1 lần thanh toán
+                </p>
+            </div>
+            <div class="card p-3 mt-3">
+                <h5>Phương thức thanh toán</h5>
+                <div class="d-flex align-items-center">
+                    <img src="~/images/VNPAY.png" alt="VNPAY" width="80" />
+                    <span class="ms-2">VNPAY</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin vé -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>Bộ Tứ Báo Thủ</h5>
+                <p class="text-muted">2D Phụ Đề</p>
+                <img src="~/images/VNPAY.png" alt="Poster" class="img-fluid mb-3" style="max-width: 150px" />
+                <p><strong>Chicken Da Nang - Rạp 4</strong></p>
+                <p>Suất: 17:30 - 31/01/2025</p>
+                <p>Ghế G4: <span class="float-end">120.000 VNĐ</span></p>
+                <p>Ghế G5: <span class="float-end">120.000 VNĐ</span></p>
+                <p>1x iCombo 1 Big Extra STD: <span class="float-end">100.000 VNĐ</span></p>
+                <hr />
+                <p><strong>Tổng cộng:</strong> <span class="float-end">340.000 VNĐ</span></p>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-secondary w-50">Quay lại</button>
+                    <button class="btn pay-btn w-50">Thanh toán</button>
+                </div>
+                <button class="btn cancel-btn w-50 mt-2">Hủy giao dịch</button>
+            </div>
+        </div>
+
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+<!-- Modal Thông tin đặt vé -->
+<div id="ticketModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 class="text-center">THÔNG TIN ĐẶT VÉ</h2>
+        <div class="ticket-info">
+            <div class="ticket-section">
+                <h4>Phim</h4>
+                <div class="info-box">
+                    <strong>BỘ TỨ BÁO THÙ</strong>
+                    <p>2D Phụ Đề</p>
+                </div>
+            </div>
+
+            <div class="ticket-section">
+                <h4>Rạp</h4>
+                <div class="info-box">
+                    <strong>CHICKEN ĐÀ NẴNG</strong>
+                    <p>Suất: 17:30 - 31/01/2025</p>
+                    <p>RẠP 4</p>
+                    <p>Người lớn G5, G4</p>
+                    <p>1x iCombo 1 BIG EXTRA STD</p>
+                </div>
+            </div>
+
+            <div class="total-section">
+                <h4>Tổng</h4>
+                <p>340.000 VNĐ</p>
+            </div>
+
+            <button class="pay-btn w-100">Thanh toán</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Payment.js"></script>
+}
+
