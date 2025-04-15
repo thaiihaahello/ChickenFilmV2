@@ -1,0 +1,217 @@
+/* Reset và cài đặt chung */
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Cài đặt cho body */
+body {
+    background-color: #f5f5f5;
+}
+
+/* Cài đặt chung cho container */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Cài đặt cho phần header */
+.header {
+    background-color: #901d1d;
+    height: 100px;
+}
+
+.header-logo {
+    height: 100px;
+}
+
+.header-text1 {
+    margin-left: auto;
+}
+
+/* Tabs */
+.tab {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease, border-bottom 0.3s ease;
+}
+
+    .tab-button:hover {
+        color: #9e1a1a;
+    }
+
+    .tab-button.active {
+        color: #9e1a1a;
+        border-bottom: 3px solid #9e1a1a;
+    }
+
+/* Hệ thống lưới 12 cột */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+[class*="col-"] {
+    padding: 0 15px;
+}
+
+/* Movie list */
+.movie-list {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.movie-list-item2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+    .movie-list-item2 img {
+        height: 407px;
+        border-radius: 10px;
+    }
+
+.movie-name {
+    font-weight: bold;
+    margin-top: 10px;
+}
+/* Ẩn 2 List */
+.hidden {
+    display: none;
+}
+/* Footer */
+.footer {
+    width: 100%;
+    background-color: #000000;
+    padding: 0 140px;
+}
+
+.footer-content {
+    color: white;
+    width: fit-content;
+}
+
+.footer-logo {
+    height: 200px;
+}
+
+.footer-col {
+    padding: 60px 0;
+}
+
+.footer-col-logo {
+    justify-items: center;
+    border-left: 1px solid white;
+}
+
+/* Cấu trúc cho movie item */
+.movie-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Phần poster và overlay */
+/* Phần poster và overlay */
+/* Giữ kích thước ban đầu của ảnh */
+.poster-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+    /* Chỉnh ảnh về đúng kích thước ban đầu */
+    .poster-container img {
+        width: 100%;
+        height: 407px; /* Giữ nguyên chiều cao ban đầu */
+        display: block;
+        transition: transform 0.3s ease;
+        object-fit: cover; /* Đảm bảo tỷ lệ khung hình được giữ nguyên */
+    }
+
+    .poster-container:hover img {
+        transform: scale(1.05);
+    }
+
+/* Chỉnh overlay */
+.movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px;
+}
+
+.poster-container:hover .movie-overlay {
+    opacity: 1;
+}
+
+/* Điều chỉnh nút */
+.buy-button,
+.chitietphim-button {
+    padding: 10px 0;
+    width: 150px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.buy-button {
+    background-color: #f26522;
+    color: white;
+}
+
+    .buy-button:hover {
+        background-color: #e05a18;
+        transform: scale(1.05);
+    }
+
+.chitietphim-button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+    .chitietphim-button:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+    }
+
+/* Đảm bảo tên phim hiển thị bên dưới ảnh */
+.movie-name {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
