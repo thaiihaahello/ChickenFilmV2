@@ -1,0 +1,84 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ChickenFilmV2.ViewModels.ListPhimViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Main.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/ListPhim.css" />
+@section Scripts {
+    <script src="~/js/ListPhim.js"></script>
+}
+
+<div class="movie-section">
+    <h2 class="section-title">Danh sách phim</h2>
+
+    <div class="tabs">
+        <button class="tab-button active" data-filter="all">Tất cả phim</button>
+        <button class="tab-button" data-filter="dang-chieu">Phim đang chiếu</button>
+        <button class="tab-button" data-filter="sap-chieu">Phim sắp chiếu</button>
+    </div>
+
+    <!-- Tất cả phim -->
+    <div class="movie-list default" id="all">
+        <div class="row movie-list-item2">
+            @foreach (var movie in Model.AllMovies)
+            {
+                <div class="col-md-3">
+                    <div class="movie-item">
+                        <div class="poster-container">
+                            <img src="@Url.Content(movie.PosterUrl.Replace("/image/", "/images/"))" alt="@movie.Title" />                            <div class="movie-overlay">
+                                <button class="buy-button">Mua vé</button>
+                                <button class="chitietphim-button">Chi tiết phim</button>
+                            </div>
+                        </div>
+                        <div class="movie-name">@movie.Title</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Phim đang chiếu -->
+    <div class="movie-list hidden" id="dang-chieu">
+        <div class="row movie-list-item2">
+            @foreach (var movie in Model.DangChieu)
+            {
+                <div class="col-md-3">
+                    <div class="movie-item">
+                        <div class="poster-container">
+                            <img src="@Url.Content(movie.PosterUrl.Replace("/image/", "/images/"))" alt="@movie.Title" />                            <div class="movie-overlay">
+                                <button class="buy-button">Mua vé</button>
+                                <button class="chitietphim-button">Chi tiết phim</button>
+                            </div>
+                        </div>
+                        <div class="movie-name">@movie.Title</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Phim sắp chiếu -->
+    <div class="movie-list hidden" id="sap-chieu">
+        <div class="row movie-list-item2">
+            @foreach (var movie in Model.SapChieu)
+            {
+                <div class="col-md-3">
+                    <div class="movie-item">
+                        <div class="poster-container">
+                            <img src="@Url.Content(movie.PosterUrl.Replace("/image/", "/images/"))" alt="@movie.Title" />
+
+                            <div class="movie-overlay">
+                                <button class="buy-button">Mua vé</button>
+                                <button class="chitietphim-button">Chi tiết phim</button>
+                            </div>
+                        </div>
+                        <div class="movie-name">@movie.Title</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
