@@ -1,0 +1,76 @@
+﻿@model EditMovieViewModel
+
+<div class="container-fluid">
+<div id="movie">
+    <form method="post" asp-action="Edit" asp-controller="Movies" enctype="multipart/form-data" id="movie-form">
+        <div class="button-container d-flex justify-content-between mb-3">
+                <div class="form-left-buttons d-flex gap-2">
+                    <button class="btn btn-primary"><i class='bx bx-arrow-back'></i> Quay lại</button>
+                    <button type="submit" class=" open-btn btn-secondary ml-3">
+                        <i class='bx bx-save'></i> Cập nhật
+                    </button>
+                    </div>
+                    <button type="submit" class="btn btn-danger delete-btn" asp-action="Delete" asp-controller="Movies"
+                            onclick="return confirm ('Bạn có chắc chắn muốn xóa phim này không?');">
+                        <i class='bx bx-trash'></i> Xóa phim
+                    </button>
+                </div>
+        <div class="form-wrapper">
+            <div class="form-left">
+                <label class="form-label">ID: </label>
+                <input type="number" class="form-control" asp-for="MovieId" readonly>
+                <label class="form-label">Tên phim:   </label>
+                <input type="text" class="form-control" placeholder="Nhập tên phim" asp-for="Title" required>
+                <label class="form-label">Trailer:   </label>
+                <input type="text" class="form-control" placeholder="Link trailer" asp-for="TrailerUrl">
+                <label for="Nội dung phim:">Nội dung phim:   </label>
+                <textarea class="form-control" placeholder="Nội dung phim" asp-for="Description"></textarea>
+                <label class="form-label">Thể loại:   </label>
+                <input type="text" class="form-control" placeholder="Thể loại" asp-for="Genre">
+                <label class="form-label">Đạo diễn:   </label>
+                <input type="text" class="form-control" placeholder="Đạo diễn" asp-for="Director">
+                <label class="form-label">Diễn viên:   </label>
+                <input type="text" class="form-control" placeholder="Diễn viên" asp-for="Cast">
+                <label class="form-label">Độ tuổi xem phim:   </label>
+                <input type="text" class="form-control" placeholder="Độ tuổi xem phim" asp-for="AgeRating">
+            </div>
+
+            <div class="form-right">
+                <label class="form-label">Ngày chiếu: </label>
+                <input type="date" class="form-control" asp-for=ReleaseDate>
+                <label class="form-label">Thời lượng phim (phút): </label>
+                <input type="number" class="form-control" placeholder="Thời lượng (phút)" asp-for="Duration">
+                <label class="form-label">Trạng thái: </label>
+                <select asp-for="Status" class="form-control">
+                    <option value="select">--Chọn--</option>
+                    <option value="Đang chiếu">Đang chiếu</option>
+                    <option value="Sắp chiếu">Sắp chiếu</option>
+                </select>
+                <label class="form-label">Hình thức chiếu: </label>
+                <select asp-for="Format" class="form-control">
+                    <option value="select">--Chọn--</option>
+                    <option value="2D">2D</option>
+                    <option value="3D">3D</option>
+                    <option value="IMAX">IMAX</option>
+                </select>
+                <label class="form-label">Hình thức dịch: </label>
+                <select asp-for="Language" class="form-control">
+                    <option value="select">--Chọn--</option>
+                    <option value="sub">Lồng tiếng</option>
+                    <option value="dubbed">Phụ đề</option>
+                </select>
+                <label class="form-label">Poster: </label>
+                <input type="file" name="PosterUrl" placeholder="Link poster">
+                <label class="form-label">Banner: </label>
+                <input type="file" name="BannerUrl" placeholder="Link banner">
+                <label class="form-label">Quốc gia: </label>
+                <input type="text" placeholder="Quốc gia" asp-for="Country">
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Movies/EditMovie.css">
+}

@@ -1,0 +1,85 @@
+﻿#movie {
+    width: 100%;
+    max-width: unset;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 0px 50px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.form-wrapper {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.form-left, .form-right {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-control,
+select,
+textarea {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+    .form-control:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+    }
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.button-container {
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.open-btn {
+    background-color: #A70909;
+    border: none;
+    color: white;
+}
+
+    .open-btn:hover {
+        background-color: #6c0707;
+    }
+
+.btn-danger {
+    background-color: #FF0D0D;
+    border: none;
+    color: white;
+    margin-left: auto;
+}
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+

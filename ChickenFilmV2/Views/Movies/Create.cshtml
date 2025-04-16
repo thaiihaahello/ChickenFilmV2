@@ -1,0 +1,69 @@
+﻿@model MovieViewModel
+
+<div id="movie-modal" class="modal">
+    <form method="post" asp-action="Create" asp-controller="Movies" enctype="multipart/form-data" id="movie-form" class="modal-content">
+        <h2>Thêm phim mới</h2>
+        <div class="form-wrapper">
+            <div class="form-left">
+                <label class="form-label">Tên phim: </label>
+                <input type="text" class="form-control" placeholder="Nhập tên phim" asp-for="Title" required>
+                <label class="form-label">Trailer: </label>
+                <input type="text" class="form-control" placeholder="Link trailer" asp-for="TrailerUrl">
+                <label for="Nội dung phim:">Nội dung phim: </label>
+                <textarea class="form-control" placeholder="Nội dung phim" asp-for="Description"></textarea>
+                <label class="form-label">Thể loại: </label>
+                <input type="text" class="form-control" placeholder="Thể loại" asp-for="Genre">
+                <label class="form-label">Đạo diễn: </label>
+                <input type="text" class="form-control" placeholder="Đạo diễn" asp-for="Director">
+                <label class="form-label">Diễn viên: </label>
+                <input type="text" class="form-control" placeholder="Diễn viên" asp-for="Cast">
+                <label class="form-label">Độ tuổi xem phim: </label>
+                <input type="text" class="form-control" placeholder="Độ tuổi xem phim" asp-for="AgeRating">
+            </div>
+
+            <div class="form-right">
+                <label class="form-label">Ngày chiếu: </label>
+                <input type="date" class="form-control" asp-for=ReleaseDate>
+                <label class="form-label">Thời lượng phim (phút): </label>
+                <input type="number" class="form-control" placeholder="Thời lượng (phút)" asp-for="Duration">
+                <label class="form-label">Trạng thái: </label>
+                <select asp-for="Status" class="form-control">
+                    <option value="select">--Chọn--</option>
+                    <option value="Đang chiếu">Đang chiếu</option>
+                    <option value="Sắp chiếu">Sắp chiếu</option>
+                </select>
+                <label class="form-label">Hình thức chiếu: </label>
+                <select asp-for="Format" class="form-control">
+                    <option value="select">--Chọn--</option>
+                    <option value="2D">2D</option>
+                    <option value="3D">3D</option>
+                    <option value="IMAX">IMAX</option>
+                </select>
+                <label class="form-label">Hình thức dịch: </label>
+                <select asp-for="Language" class="form-control">
+                    <option value="select">--Chọn--</option>
+                    <option value="sub">Lồng tiếng</option>
+                    <option value="dubbed">Phụ đề</option>
+                </select>
+                <label class="form-label">Poster: </label>
+                <input type="file" name="PosterUrl" placeholder="Link poster">
+                <label class="form-label">Banner: </label>
+                <input type="file" name="BannerUrl" placeholder="Link banner">
+                <label class="form-label">Quốc gia: </label>
+                <input type="text" placeholder="Quốc gia" asp-for="Country">
+            </div>
+        </div>
+
+        <div class="form-footer">
+            <button type="submit" class="save-btn">Lưu</button>
+            <button type="button" class="cancel-btn" onclick="closeModal()">Hủy</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Movies/CreateMovie.css">
+}

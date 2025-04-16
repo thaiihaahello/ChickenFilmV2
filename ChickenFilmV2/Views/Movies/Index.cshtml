@@ -1,0 +1,64 @@
+﻿@model List<ChickenFilmV2.Models.Movie>
+
+    @{
+    ViewData["Title"] = "Movies";
+}
+<div class="container-fluid mt-3 align-items-center">
+    <div class="container-fluid mt-3">
+        <div class="button-container d-flex mb-3">
+            <button class="btn btn-primary"><i class='bx bx-arrow-back'></i> Quay lại</button>
+            <button class=" open-btn btn-secondary ml-3" onclick="openModal()">
+                <i class='bx bx-plus'></i> Tạo phim
+            </button>
+        </div>
+        @await Html.PartialAsync("Create", new ChickenFilmV2.ViewModel.MovieViewModel())
+        @foreach (var movies in Model)
+        {
+            <a href= "@Url.Action("Edit", "Movies", new { id = movies.MovieId})" class="movie-card-link">
+
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="@Url.Content($"~/{movies.PosterUrl}")" alt="Poster phim">
+                </div>
+                <div class="details">
+                    <h1 class="title">@movies.Title<span class="age">@movies.AgeRating +</span>
+                    </h1>
+                    <p><strong>Đạo diễn: </strong>@movies.Director</p>
+                    <p><strong>Diễn viên: </strong>@movies.Cast</p>
+                    <p><strong>Thể loại: </strong>@movies.Genre</p>
+                    <p><strong>Khởi chiếu: </strong>@movies.ReleaseDate.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Thời lượng: </strong>@movies.Duration phút</p>
+                    <p>
+                        <a href="@movies.TrailerUrl" target="_blank">
+                            Trailer
+                        </a> </p>
+                </div>
+            </div>
+            </a>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        const modal = document.getElementById('movie-modal');
+        const form = document.getElementById('movie-form');
+
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            form.reset();
+        }
+
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Movies/IndexMovie.css">
+}

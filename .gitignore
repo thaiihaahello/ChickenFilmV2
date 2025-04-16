@@ -361,7 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/ChickenFilmV2/Models
 /ChickenFilmV2/ChickenFilmV2.csproj
 /ChickenFilmV2/appsettings.json
 /ChickenFilmV2/Program.cs
+/ChickenFilmV2/Models
