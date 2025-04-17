@@ -1,0 +1,65 @@
+﻿<aside id="sidebar">
+    <div class="d-flex">
+        <button class="toggle-btn" type="button">
+            <i class='bx bx-grid-alt'></i>
+        </button>
+        <div class="sidebar-logo">
+            <a href="#">SixChickenCinema</a>
+        </div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-page="/Movie/">
+                <i class='bx bx-film'></i>
+                <span>Quản lý phim</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link">
+                <i class='bx bx-calendar-alt'></i>
+                <span>Quản lý lịch chiếu</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link">
+                <i class='bx bx-windows'></i>
+                <span>Quản lý phòng chiếu</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link">
+                <i class='bx bx-time'></i>
+                <span>Quản lý suất chiếu</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link">
+                <i class='bx bx-memory-card'></i>
+                <span>Quản lý vé</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link">
+                <i class='bx bxs-discount'></i>
+                <span>Quản lý khuyến mãi</span>
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="#" class="sidebar-link">
+            <i class='bx bx-exit'></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
+<script>
+    const hamBurger = document.querySelector(".toggle-btn");
+
+    if (hamBurger) {
+        hamBurger.addEventListener("click", function () {
+            document.querySelector("#sidebar").classList.toggle("expand");
+        });
+    } else {
+        console.error("Không tìm thấy .toggle-btn");
+    }
+</script>
