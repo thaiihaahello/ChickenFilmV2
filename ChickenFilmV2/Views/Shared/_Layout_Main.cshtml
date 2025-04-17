@@ -3,14 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SixChickenFilm</title>
+    <title>@ViewData["Title"] - ChickenFilmV2</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/ChickenFilmV2.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SixChickenFilm.styles.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
     <link rel="stylesheet" href="~/css/layout_main.css" asp-append-version="true" />
-
-
 </head>
 <body>
     <header>
@@ -73,18 +71,15 @@
                             }
                         </li>
                     </ul>
-
                 </div>
             </div>
         </nav>
     </header>
-
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <footer>
         <div class="footer">
             <div class="row">
