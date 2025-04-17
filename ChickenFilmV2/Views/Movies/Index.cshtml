@@ -39,25 +39,26 @@
     </div>
 </div>
 
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script>
-        const modal = document.getElementById('movie-modal');
-        const form = document.getElementById('movie-form');
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Khởi tạo modal bằng Bootstrap 5
+        const createMovieModal = new bootstrap.Modal(document.getElementById('createMovieModal'), {
+            keyboard: false // Tắt việc đóng modal khi nhấn ESC
+        });
 
-        function openModal() {
-            modal.style.display = 'flex';
+        // Hàm mở modal
+        window.openModal = function () {
+            createMovieModal.show();
         }
 
-        function closeModal() {
-            modal.style.display = 'none';
-            form.reset();
+        // Hàm đóng modal
+        window.closeModal = function () {
+            createMovieModal.hide();
         }
+    });
+</script>
 
-        window.openModal = openModal;
-        window.closeModal = closeModal;
-    </script>
-}
+
 
 @section Styles {
     <link rel="stylesheet" href="~/css/Movies/IndexMovie.css">

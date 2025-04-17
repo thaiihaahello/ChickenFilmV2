@@ -1,23 +1,29 @@
-﻿using ChickenFilmV2.Models.ViewModel;
-using ChickenFilmV2.Models;
+﻿using ChickenFilmV2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ChickenFilmV2.ViewModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ChickenFilmV2.Services;
+using ChickenFilmV2.Contacts;
+
 
 namespace ChickenFilmV2.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly MovieDbContext _context;
+        private readonly IMoviesServices _movieService;
 
-        public MoviesController(MovieDbContext context)
+        public MoviesController(MovieDbContext context, IMoviesServices movieService)
         {
             _context = context;
+            _movieService = movieService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var movies = await _context.Movies.ToListAsync();
+            var movies = _movieService.GetAllMovies();
             return View(movies);
         }
 
@@ -29,7 +35,7 @@ namespace ChickenFilmV2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(MovieViewModel viewmodel)
+        public IActionResult Create(MovieViewModel viewmodel)
         {
             if (ModelState.IsValid)
             {
@@ -39,7 +45,7 @@ namespace ChickenFilmV2.Controllers
                 if (viewmodel.PosterUrl != null && viewmodel.PosterUrl.Length > 0)
                 {
                     var fileName = Path.GetFileName(viewmodel.PosterUrl.FileName);
-                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "movies");
+                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "movies");
 
                     if (!Directory.Exists(folderPath))
                     {
@@ -50,7 +56,7 @@ namespace ChickenFilmV2.Controllers
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await viewmodel.PosterUrl.CopyToAsync(stream);
+                         viewmodel.PosterUrl.CopyToAsync(stream);
                     }
 
                     posterPath = Path.Combine("image", "movies", fileName);
@@ -59,7 +65,7 @@ namespace ChickenFilmV2.Controllers
                 if (viewmodel.BannerUrl != null && viewmodel.BannerUrl.Length > 0)
                 {
                     var fileName = Path.GetFileName(viewmodel.BannerUrl.FileName);
-                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "movies");
+                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "movies");
 
                     if (!Directory.Exists(folderPath))
                     {
@@ -70,10 +76,10 @@ namespace ChickenFilmV2.Controllers
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await viewmodel.BannerUrl.CopyToAsync(stream);
+                         viewmodel.BannerUrl.CopyToAsync(stream);
                     }
 
-                    bannerPath = Path.Combine("image", "movies", fileName);
+                    bannerPath = Path.Combine("images", "movies", fileName);
                 }
 
                 var movies = new Movie()
@@ -96,20 +102,21 @@ namespace ChickenFilmV2.Controllers
                     Country = viewmodel.Country,
                 };
 
-                await _context.Movies.AddAsync(movies);
-                await _context.SaveChangesAsync();
+                 _movieService.AddMovie(movies);
+
+
                 return RedirectToAction("Index", "Movies");
             }
             return View(viewmodel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public  IActionResult Edit(int id)
         {
-            var movies = await _context.Movies.FirstOrDefaultAsync(m => m.MovieId == id);
+            var movies =  _context.Movies.Find(id);
             if (movies is not null)
             {
-               var viewmodel = new EditMovieViewModel()
+                var viewmodel = new EditMovieViewModel()
                {
                    MovieId = movies.MovieId,
                    Title = movies.Title,
@@ -138,9 +145,9 @@ namespace ChickenFilmV2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit (EditMovieViewModel model)
+        public  IActionResult Edit (EditMovieViewModel model)
         {
-            var movie = await _context.Movies.FindAsync(model.MovieId);
+            var movie =  _context.Movies.Find(model.MovieId);
             if (movie is not null)
             {
                 movie.Title = model.Title;
@@ -165,7 +172,7 @@ namespace ChickenFilmV2.Controllers
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await model.PosterUrl.CopyToAsync(stream);
+                         model.PosterUrl.CopyToAsync(stream);
                     }
                     movie.PosterUrl = Path.Combine("images", "movies", fileName);
                 }
@@ -176,23 +183,23 @@ namespace ChickenFilmV2.Controllers
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await model.BannerUrl.CopyToAsync(stream);
+                         model.BannerUrl.CopyToAsync(stream);
                     }
                     movie.BannerUrl = Path.Combine("images", "movies", fileName);
                 }
-                await _context.SaveChangesAsync();
+                 _movieService.UpdateMovie(movie);
                 return RedirectToAction("Index", "Movies");
             }
             return RedirectToAction("Index", "Movies");
         }
+
         [HttpPost]
-        public async Task<IActionResult> Delete(EditMovieViewModel model)
+        public  IActionResult Delete(EditMovieViewModel model)
         {
-            var movies = await _context.Movies.FindAsync(model.MovieId);
-            if (movies is not null)
+            var movies = _movieService.GetMovieById(model.MovieId);
+            if (movies != null)
             {
-                _context.Movies.Remove(movies);
-                await _context.SaveChangesAsync();
+                _movieService.DeleteMovie(model.MovieId);
                 return RedirectToAction("Index", "Movies");
             }
             return RedirectToAction("Index", "Movies");

@@ -1,6 +1,5 @@
 ﻿.button-container {
     display: flex;
-    justify-content: flex-;
     gap: 15px;
     /* Khoảng cách giữa các nút */
 }
@@ -26,6 +25,7 @@
     background-color: #429FD8;
     color: black;
     border: none;
+    border-radius: 5px;
 }
 
 .btn-secondary:hover {

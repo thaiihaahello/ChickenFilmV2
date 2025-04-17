@@ -1,64 +1,86 @@
 ﻿@model ChickenFilmV2.ViewModel.MovieViewModel
 
-<div id="movie-modal" class="modal">
-    <form method="post" asp-action="Create" asp-controller="Movies" enctype="multipart/form-data" id="movie-form" class="modal-content">
-        <h2>Thêm phim mới</h2>
-        <div class="form-wrapper">
-            <div class="form-left">
-                <label class="form-label">Tên phim: </label>
-                <input type="text" class="form-control" placeholder="Nhập tên phim" asp-for="Title" required>
-                <label class="form-label">Trailer: </label>
-                <input type="text" class="form-control" placeholder="Link trailer" asp-for="TrailerUrl">
-                <label for="Nội dung phim:">Nội dung phim: </label>
-                <textarea class="form-control" placeholder="Nội dung phim" asp-for="Description"></textarea>
-                <label class="form-label">Thể loại: </label>
-                <input type="text" class="form-control" placeholder="Thể loại" asp-for="Genre">
-                <label class="form-label">Đạo diễn: </label>
-                <input type="text" class="form-control" placeholder="Đạo diễn" asp-for="Director">
-                <label class="form-label">Diễn viên: </label>
-                <input type="text" class="form-control" placeholder="Diễn viên" asp-for="Cast">
-                <label class="form-label">Độ tuổi xem phim: </label>
-                <input type="text" class="form-control" placeholder="Độ tuổi xem phim" asp-for="AgeRating">
-            </div>
+<div class="modal fade" id="createMovieModal" tabindex="-1" aria-labelledby="createMovieModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" asp-action="Create" asp-controller="Movies" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createMovieModalLabel">Thêm phim mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tên phim</label>
+                            <input type="text" class="form-control" asp-for="Title" placeholder="Nhập tên phim" required />
 
-            <div class="form-right">
-                <label class="form-label">Ngày chiếu: </label>
-                <input type="date" class="form-control" asp-for=ReleaseDate>
-                <label class="form-label">Thời lượng phim (phút): </label>
-                <input type="number" class="form-control" placeholder="Thời lượng (phút)" asp-for="Duration">
-                <label class="form-label">Trạng thái: </label>
-                <select asp-for="Status" class="form-control">
-                    <option value="select">--Chọn--</option>
-                    <option value="Đang chiếu">Đang chiếu</option>
-                    <option value="Sắp chiếu">Sắp chiếu</option>
-                </select>
-                <label class="form-label">Hình thức chiếu: </label>
-                <select asp-for="Format" class="form-control">
-                    <option value="select">--Chọn--</option>
-                    <option value="2D">2D</option>
-                    <option value="3D">3D</option>
-                    <option value="IMAX">IMAX</option>
-                </select>
-                <label class="form-label">Hình thức dịch: </label>
-                <select asp-for="Language" class="form-control">
-                    <option value="select">--Chọn--</option>
-                    <option value="sub">Lồng tiếng</option>
-                    <option value="dubbed">Phụ đề</option>
-                </select>
-                <label class="form-label">Poster: </label>
-                <input type="file" name="PosterUrl" placeholder="Link poster">
-                <label class="form-label">Banner: </label>
-                <input type="file" name="BannerUrl" placeholder="Link banner">
-                <label class="form-label">Quốc gia: </label>
-                <input type="text" placeholder="Quốc gia" asp-for="Country">
-            </div>
-        </div>
+                            <label class="form-label mt-3">Trailer</label>
+                            <input type="text" class="form-control" asp-for="TrailerUrl" placeholder="Link trailer" />
 
-        <div class="form-footer">
-            <button type="submit" class="save-btn">Lưu</button>
-            <button type="button" class="cancel-btn" onclick="closeModal()">Hủy</button>
+                            <label class="form-label mt-3">Nội dung phim</label>
+                            <textarea class="form-control" asp-for="Description" placeholder="Nội dung phim"></textarea>
+
+                            <label class="form-label mt-3">Thể loại</label>
+                            <input type="text" class="form-control" asp-for="Genre" placeholder="Thể loại" />
+
+                            <label class="form-label mt-3">Đạo diễn</label>
+                            <input type="text" class="form-control" asp-for="Director" placeholder="Đạo diễn" />
+
+                            <label class="form-label mt-3">Diễn viên</label>
+                            <input type="text" class="form-control" asp-for="Cast" placeholder="Diễn viên" />
+
+                            <label class="form-label mt-3">Độ tuổi xem phim</label>
+                            <input type="text" class="form-control" asp-for="AgeRating" placeholder="Độ tuổi" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Ngày chiếu</label>
+                            <input type="date" class="form-control" asp-for="ReleaseDate" />
+
+                            <label class="form-label mt-3">Thời lượng (phút)</label>
+                            <input type="number" class="form-control" asp-for="Duration" placeholder="Thời lượng" />
+
+                            <label class="form-label mt-3">Trạng thái</label>
+                            <select class="form-select" asp-for="Status">
+                                <option value="">--Chọn--</option>
+                                <option value="Đang chiếu">Đang chiếu</option>
+                                <option value="Sắp chiếu">Sắp chiếu</option>
+                            </select>
+
+                            <label class="form-label mt-3">Hình thức chiếu</label>
+                            <select class="form-select" asp-for="Format">
+                                <option value="">--Chọn--</option>
+                                <option value="2D">2D</option>
+                                <option value="3D">3D</option>
+                                <option value="IMAX">IMAX</option>
+                            </select>
+
+                            <label class="form-label mt-3">Hình thức dịch</label>
+                            <select class="form-select" asp-for="Language">
+                                <option value="">--Chọn--</option>
+                                <option value="sub">Lồng tiếng</option>
+                                <option value="dubbed">Phụ đề</option>
+                            </select>
+
+                            <label class="form-label mt-3">Poster</label>
+                            <input type="file" class="form-control" name="PosterUrl" />
+
+                            <label class="form-label mt-3">Banner</label>
+                            <input type="file" class="form-control" name="BannerUrl" />
+
+                            <label class="form-label mt-3">Quốc gia</label>
+                            <input type="text" class="form-control" asp-for="Country"  />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 @section Scripts {

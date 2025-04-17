@@ -21,9 +21,15 @@
 }
 
 .form-label {
-    font-weight: 600;
+    font-weight: bold;
     color: #333;
 }
+textarea.form-control {
+    height: 150px; /* Tăng chiều cao theo ý bạn, ví dụ 150px */
+    resize: vertical; /* Cho phép người dùng kéo lên xuống, có thể để "none" nếu muốn cố định */
+    font-size: 14px; /* Tăng hoặc giảm size chữ nếu muốn */
+}
+
 
 .form-control,
 select,
