@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="~/css/FilmManagement.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Movies/FilmManagement.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Movies/IndexMovie.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Movies/CreateMovie.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ChickenFilmV2.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
@@ -18,7 +21,7 @@
         <div id="sidebar-placeholder">
             <partial name="Partial/SidebarManagement" />
         </div>
-        <main role="main" class="pb-3" id="main-content">
+        <main role="main" class="main pb-3" id="main-content">
             @RenderBody()
         </main>
     </div>
