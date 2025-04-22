@@ -1,0 +1,60 @@
+﻿@model ChickenFilmV2.ViewModelManager.ScheduleViewModel
+
+<div class="container mt-5">
+    <div class="modal fade" id="createScheduleModal" tabindex="-1" aria-labelledby="createScheduleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" asp-action="CreateSchedule" asp-controller="Schedules">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createScheduleModalLabel">Tạo lịch chiếu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Tên phòng chiếu</label>
+                            <select class="form-select" id="movieSelect" asp-for="MovieId" required>
+                                <option value="">-- Chọn phim --</option>
+                                @foreach (var movie in Model.Movies)
+                                {
+                                    <option value="@movie.MovieId">@movie.Title</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ngày bắt đầu</label>
+                            <input type="date" class="form-control" asp-for="ReleaseDate" readonly id="releaseDate">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ngày kết thúc</label>
+                            <input type="date" class="form-control" asp-for="EndDate" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Tạo phòng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+<script>
+    const movieData = @Html.Raw(Json.Serialize(Model.Movies));
+
+    document.getElementById("movieSelect").addEventListener("change", function () {
+        const selectedId = this.value;
+        const releaseInput = document.getElementById("releaseDate");
+        const selectedMovie = movieData.find(m => m.movieId == selectedId);
+
+        if (selectedMovie) {
+            releaseInput.value = new Date(selectedMovie.releaseDate).toISOString().split('T')[0];
+        } else {
+            releaseInput.value = "";
+        }
+    });
+</script>
