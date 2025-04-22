@@ -9,15 +9,13 @@ public partial class User
 
     public string? FullName { get; set; }
 
-    public string Username { get; set; } = null!;
-
     public string Avatar { get; set; } = null!;
 
     public string? Role { get; set; }
 
     public bool Gender { get; set; }
 
-    public DateOnly Birthday { get; set; }
+    public DateTime Birthday { get; set; }
 
     public string Email { get; set; } = null!;
 
