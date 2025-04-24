@@ -65,9 +65,9 @@ namespace ChickenFilmV2.Controllers
         {
             var movieId = Convert.ToInt32(form["MovieId"]);
             var reDateString = form["ReleaseDate"];
-            DateOnly reDate = DateOnly.Parse(reDateString);
+            DateTime reDate = DateTime.Parse(reDateString);
             var endDateString = form["EndDate"];
-            DateOnly endDate = DateOnly.Parse(endDateString);
+            DateTime endDate = DateTime.Parse(endDateString);
 
             var movie = _moviesServices.GetMovieById(movieId);
             if (movie != null)

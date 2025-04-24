@@ -1,0 +1,58 @@
+﻿@model ChickenFilmV2.Models.Movie
+
+@{
+    ViewData["Title"] = "Thêm mới phim";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+ <link href="~/css/CreateFilm.css" rel="stylesheet" />
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CreateFilm" method="post">
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Genre">Genre</label>
+        <input type="text" class="form-control" id="Genre" name="Genre" value="@Model.Genre" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Rating">Rating</label>
+        <input type="number" class="form-control" id="Rating" name="Rating" value="@Model.Rating" step="0.1" min="0" max="10" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Duration">Duration (minutes)</label>
+        <input type="number" class="form-control" id="Duration" name="Duration" value="@Model.Duration" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ReleaseDate">Release Date</label>
+        <input type="date" class="form-control" id="ReleaseDate" name="ReleaseDate" value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" required />
+    </div>
+
+    <div class="form-group">
+        <label for="AgeRating">Age Rating</label>
+        <input type="text" class="form-control" id="AgeRating" name="AgeRating" value="@Model.AgeRating" />
+    </div>
+
+    <div class="form-group">
+        <label for="BannerUrl">Banner URL</label>
+        <input type="text" class="form-control" id="BannerUrl" name="BannerUrl" value="@Model.BannerUrl" />
+    </div>
+
+    <div class="form-group">
+        <label for="PosterUrl">Poster URL</label>
+        <input type="text" class="form-control" id="PosterUrl" name="PosterUrl" value="@Model.PosterUrl" />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea class="form-control" id="Description" name="Description" rows="4">@Model.Description</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Movie</button>
+</form>

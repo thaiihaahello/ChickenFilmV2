@@ -11,7 +11,7 @@ public partial class Showtime
 
     public int AuditoriumId { get; set; }
 
-    public DateOnly? ShowDate { get; set; }
+    public DateTime? ShowDate { get; set; }
 
     public TimeOnly ShowTime1 { get; set; }
 

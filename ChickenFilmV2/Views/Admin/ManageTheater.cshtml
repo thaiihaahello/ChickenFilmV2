@@ -1,0 +1,81 @@
+﻿@model ChickenFilmV2.ViewModels.AdminDashboardViewModel;
+
+@{
+    ViewData["Title"] = "Admin Manage Theater";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <!-- Set Layout -->
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+    /* Table Styling for Theaters */
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #5a5454;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    td a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        td a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+    .status-online {
+        color: rgb(100, 248, 100);
+    }
+
+    .container {
+        margin-left: 370px;
+        padding-top: 100px;
+    }
+
+    </style>
+<div class="container">
+  
+
+<!-- Theaters Table -->
+<h3>Theaters</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Theater Name</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var theater in Model.Theaters)
+            {
+                <tr>
+                    <td>@theater.TheaterId</td>
+                    <td>@theater.TheaterName</td>
+                    <td>@theater.Location</td>
+                </tr>
+            }
+    </tbody>
+</table>

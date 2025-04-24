@@ -1,4 +1,4 @@
-using ChickenFilmV2.Models;
+﻿using ChickenFilmV2.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +6,8 @@ using ChickenFilmV2.Contacts;
 using ChickenFilmV2.Models;
 using ChickenFilmV2.Services;
 using Microsoft.EntityFrameworkCore;
+using ChickenFilmV2.Services.Interfaces.ChickenFilmV2.Services.Interfaces;
+using ChickenFilmV2.ViewModels;
 
 namespace ChickenFilmV2
 {
@@ -32,10 +34,11 @@ namespace ChickenFilmV2
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                     options.SlidingExpiration = true;
                 });
+            builder.Services.AddScoped<AdminDashboardViewModel>();           
+            builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
 
-
-            builder.Services.AddDbContext<MovieDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // Đăng ký MVC Controllers và Views
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
