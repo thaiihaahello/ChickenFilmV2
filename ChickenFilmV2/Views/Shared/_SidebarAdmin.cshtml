@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="icon" href="images/logosixchicken.png">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (Icon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="vendor/jqvmap/css/jqvmap.min.css">
+    <link rel="stylesheet" href="vendor/chartist/css/chartist.min.css">
+    <!-- Summernote -->
+    <link href="vendor/summernote/summernote.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <style>
+        /* Admin Header and Sidebar Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background-color: #544b4a;
+            color: white;
+            position: fixed;
+            padding: 20px;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+            .sidebar .menu {
+                margin-top: 30px;
+            }
+
+                .sidebar .menu a {
+                    display: block;
+                    color: white;
+                    text-decoration: none;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
+                }
+
+                    .sidebar .menu a:hover {
+                        background-color: #706665;
+                    }
+
+            .sidebar img {
+                width: 80px;
+                display: block;
+                margin: 0 auto;
+            }
+
+        /* Admin Header */
+        .admin-header {
+            background-color: #5a5454;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 220px; /* to avoid overlapping with sidebar */
+        }
+
+            .admin-header .nav-icons a {
+                color: white;
+                margin-right: 15px;
+            }
+
+            .admin-header .admin-info {
+                display: flex;
+                align-items: center;
+            }
+
+                .admin-header .admin-info img {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+
+                .admin-header .admin-info a {
+                    color: white;
+                    text-decoration: none;
+                }
+
+        .status-online {
+            color: rgb(100, 248, 100);
+            cursor: pointer;
+        }
+
+        .status-offline {
+            color: rgb(252, 14, 14);
+        }
+
+        /* Main Content */
+        .container {
+            margin-left: 250px;
+            padding-top: 100px;
+        }
+
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="dashboard.html"><img src="~/images/Logo.png" alt="Logo"></a>
+        <div class="menu">
+            <a asp-controller ="Admin" asp-action="Index"><i class="fas fa-home"></i> Trang chủ</a>
+            <a href="manageaccount.html"><i class="fas fa-users"></i> Quản lý tài khoản</a>
+            <a href="#"><i class="fas fa-comments"></i> Quản lý bình luận</a>
+            <a href="#"><i class="fas fa-history"></i> Nhật ký hệ thống</a>
+            <a asp-controller ="Admin" asp-action="ManageFilm"><i class="fas fa-film"></i> Quản lý phim</a>
+            <a asp-controller="Admin" asp-action="ManageTheater"><i class="fas fa-film"></i> Quản lý rạp chiếu</a>
+        </div>
+    </aside>
+
+</body>
+@section Scripts {
+    <script src="~/js/AdminStatus.js"></script> <!-- Ensure you have this JavaScript file to manage the admin status -->
+}
+</html>

@@ -1,0 +1,111 @@
+﻿@model ChickenFilmV2.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .page-wrapper {
+        max-width: 1500px;
+        margin: 60px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        padding: 40px;
+        margin-left: 300px;
+        margin-top: 100px;
+    }
+
+        .page-wrapper h3 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+    .buttonFilm {
+        padding: 10px 20px;
+        border-radius: 8px;
+        background-color: deepskyblue;
+        color: white;
+        border: none;
+        font-size: 15px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+        .buttonFilm:hover {
+            background-color: #0ca3dd;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th, td {
+        padding: 14px 18px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    td a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        td a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+</style>
+
+<div class="page-wrapper">
+    <h3>🎬 Danh sách phim</h3>
+
+    <button class="buttonFilm" onclick="window.location.href='@Url.Action("CreateFilm", "Admin")'">
+        ➕ Thêm phim mới
+    </button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Poster</th>
+                <th>Tên phim</th>
+                <th>Đánh giá</th>
+                <th>Status</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model.Movies)
+            {
+                <tr>
+                    <td>@movie.MovieId</td>
+                    <td>
+                        <img src="@movie.PosterUrl" alt="Poster @movie.Title"
+                             style="height: 100px; border-radius: 6px;" />
+                    </td>
+                    <td>@movie.Title</td>
+                    <td>@movie.Rating</td>
+                    <td>@movie.Status</td>
+                    <td>
+                        <a href="@Url.Action("MovieDetails", new { id = movie.MovieId })">Xem chi tiết</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
