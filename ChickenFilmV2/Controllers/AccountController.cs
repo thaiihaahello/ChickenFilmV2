@@ -200,7 +200,7 @@ namespace ChickenFilmV2.Controllers
             switch (user.Role)
             {
                 case "Admin":
-                    return RedirectToAction("ForgotPassword", "Account"); // hoặc controller khác tuỳ bạn
+                    return RedirectToAction("Index", "Admin"); // hoặc controller khác tuỳ bạn
                 case "FilmManager":
                     return RedirectToAction("Index", "FilmManager");
                 case "Customer":
