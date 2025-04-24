@@ -1,0 +1,116 @@
+﻿@model ChickenFilmV2.Models.User
+
+@{
+    ViewData["Title"] = "Trang cá nhân";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/ViewUser.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+}
+
+<div class="profile-body row">
+    <div class="col-md-4 profile-item1">
+        <div class="profile-item1-header">
+            <img src="@Model.Avatar" alt="Avatar" class="avatar-body">
+            <div class="profile-name-body">@Model.FullName</div>
+            <div class="profile-rank-body">@Model.Role</div>
+        </div>
+        <hr>
+        <div class="profile-item1-body">
+            <div>Tổng chi tiêu 2025</div>
+            <div style="font-weight: normal" data-bs-toggle="tooltip"
+                 title="Six Chicken Cinema sẽ xét duyệt hạng thành viên năm 2025 dựa vào chi tiêu của năm 2025">
+                &#8859;
+            </div>
+            <div class="profile-item1-body-item">500.000 đ</div>
+        </div>
+    </div>
+    <div class="col-md-8 profile-item2">
+        <div class="profile-item2-header row">
+            <a class="col-md-4 profile-item2-header-item nav-link" href="~/Profile/View" style="color: #901D1D">Thông tin cá nhân</a>
+            <a class="col-md-4 profile-item2-header-item nav-link" href="javascript:void(0)" style="color: black">Lịch sử giao dịch</a>
+            <a class="col-md-4 profile-item2-header-item nav-link" href="javascript:void(0)" style="color: black">Khuyến mãi</a>
+        </div>
+        <hr>
+        <div class="profile-form">
+            <div class="row">
+                <div class="column">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" value="@Model.FullName" readonly disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-group">
+                            <input type="email" value="@Model.Email" readonly disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <div class="gender">
+                            <div>
+                                <input type="radio" name="gender" @(Model.Gender ? "checked" : "") disabled disabled> Nam
+                            </div>
+                            <div>
+                                <input type="radio" name="gender" @(!Model.Gender ? "checked" : "") disabled disabled> Nữ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="form-group">
+                        <label>Ngày sinh</label>
+                        <input type="text" value="@Model.Birthday.ToString("dd/MM/yyyy")" readonly disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="text" value="@Model.PhoneNumber" readonly disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <div class="input-group align-items-center justify-content-between" style="display: flex">
+                            <input type="password" value="********" readonly class="form-control w-50">
+                            <div data-bs-toggle="tooltip" title="Thay đổi mật khẩu">
+                                <a class="btn text-danger" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Thay đổi</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button">
+                <a class="btn btn-danger" href="@Url.Action("EditProfile", "Profile")">Chỉnh sửa</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Chỉnh Sửa Mật Khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <form method="post" asp-action="ChangePassword">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Mật khẩu hiện tại</label>
+                        <input type="password" class="form-control" name="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" name="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới</label>
+                        <input type="password" class="form-control" name="confirmPassword" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning">Cập nhật mật khẩu mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
