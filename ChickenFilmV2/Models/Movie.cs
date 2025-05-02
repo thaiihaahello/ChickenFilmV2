@@ -21,8 +21,6 @@ public partial class Movie
 
     public DateOnly ReleaseDate { get; set; }
 
-    public DateOnly EndDate { get; set; }
-
     public decimal? Rating { get; set; }
 
     public string? Status { get; set; }

@@ -1,3 +1,7 @@
+
+using ChickenFilmV2.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace ChickenFilmV2
 {
     public class Program
@@ -8,6 +12,8 @@ namespace ChickenFilmV2
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<MovieDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

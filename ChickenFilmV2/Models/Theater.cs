@@ -20,6 +20,4 @@ public partial class Theater
     public virtual ICollection<Auditorium> Auditoria { get; set; } = new List<Auditorium>();
 
     public virtual ICollection<CommissionTransaction> CommissionTransactions { get; set; } = new List<CommissionTransaction>();
-
-    public virtual ICollection<Promotion> Promotions { get; set; } = new List<Promotion>();
 }

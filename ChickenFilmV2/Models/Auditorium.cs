@@ -28,4 +28,6 @@ public partial class Auditorium
     public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 
     public virtual Theater Theater { get; set; } = null!;
+
+    public virtual ICollection<TicketPricing> TicketPricings { get; set; } = new List<TicketPricing>();
 }
