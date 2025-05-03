@@ -1,0 +1,125 @@
+﻿.carousel{
+    margin-top: 30px;
+}
+
+.movie-list-item1 {
+    margin-top: 30px;
+}
+
+.movie-header {
+    font-weight: bold;
+    border-left: 3px solid #901D1D;
+}
+
+.blog-container {
+    display: flex;
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 1200px;
+}
+
+.main-post {
+    flex: 1;
+    overflow: hidden;
+}
+
+.main-post img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.main-post a {
+    text-decoration: none;
+    color: #000;
+}
+
+.main-post h2 {
+    font-size: 22px;
+    margin: 10px 0;
+    transition: color 0.3s ease;
+}
+
+.main-post h2:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.post-actions {
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.like-btn {
+    background-color: #EEEEEE;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.views {
+    font-size: 14px;
+    color: #444;
+}
+
+.side-posts {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.side-post img {
+    width: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.side-post a {
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    color: #000;
+    flex-grow: 1;
+}
+
+.side-post h3 {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.side-post h3:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.header-end {
+    font-weight: bold;
+}
+
+.svg-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: white;
+}
+
+.svg-icon circle {
+    stroke: white;
+    stroke-width: 1;
+}
