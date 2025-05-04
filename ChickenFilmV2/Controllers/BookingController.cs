@@ -21,29 +21,25 @@ namespace ChickenFilmV2.Controllers
 
         public IActionResult Booking()
         {
-            DateOnly today = DateOnly.FromDateTime(DateTime.Today); // Lấy ngày hôm nay
-
             var model = new BookingViewModel
             {
                 Theaters = _context.Theaters
-                    .Where(t => t.Location.Contains("Đà Nẵng")) // Lọc rạp ở Đà Nẵng
+                    .Where(t => t.Location.Contains("Đà Nẵng"))
                     .ToList(),
 
-                // Lấy phim đang chiếu (chỉ phim với trạng thái "playing")
                 DangChieu = _context.Movies
                     .Where(m => m.Showtimes
                         .Any(s => s.ShowDate.HasValue
-                                  && s.ShowDate.Value == today
-                                  && s.Status == "Đang chiếu")) // Lọc phim đang chiếu
+                                  && s.ShowDate.Value.Date == DateTime.Today
+                                  && s.Status == "Đang chiếu"))
                     .Include(m => m.Showtimes)
                     .ToList()
             };
 
-
-
             return View(model);
         }
-        
+
+
 
         // Ajax: lấy phim theo rạp
         [HttpGet]
@@ -82,7 +78,7 @@ namespace ChickenFilmV2.Controllers
         }
 
 
-        // GET: /Booking/SeatSelection/5
+        // GET: /Booking/SeatSelection
         public IActionResult SelectSeats(int showtimeId)
         {
             var showtime = _context.Showtimes

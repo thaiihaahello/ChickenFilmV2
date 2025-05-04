@@ -177,6 +177,6 @@ document.getElementById("seatForm").addEventListener("submit", function (event) 
     console.log("Selected Seats:", selectedSeatsInput.value); // In ra giá trị ghế đã chọn
     if (selectedSeatsInput.value === "") {
         alert("Vui lòng chọn ghế trước khi tiếp tục.");
-        event.preventDefault(); // Ngừng gửi form nếu không có ghế nào được chọn
+        event.preventDefault(); // Ngừng gửi form nếu không có ghế nào được chọn.
     }
 });
