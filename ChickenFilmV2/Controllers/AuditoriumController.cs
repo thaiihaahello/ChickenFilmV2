@@ -9,11 +9,13 @@ namespace ChickenFilmV2.Controllers
     {
         private readonly MovieDbContext _context;
         private readonly IAuditoriumServices _auditoriumServices;
+        private readonly ISeatsServices _seatsService;
 
-        public AuditoriumController(MovieDbContext context, IAuditoriumServices auditoriumServices)
+        public AuditoriumController(MovieDbContext context, IAuditoriumServices auditoriumServices, ISeatsServices seatsService)
         {
             _context = context;
             _auditoriumServices = auditoriumServices;
+            _seatsService = seatsService;
         }
         [HttpGet]
         public IActionResult IndexAuditoriumTheater()
@@ -97,6 +99,32 @@ namespace ChickenFilmV2.Controllers
                 return RedirectToAction("IndexAuditoriumTheater", "Auditorium");
             }
             return RedirectToAction("IndexAuditoriumTheater", "Auditorium");
+        }
+
+
+        public IActionResult ManageSeats(int id)
+        {
+            var auditorium = _seatsService.GetAuditorium(id);
+            if (auditorium == null)
+            {
+                return NotFound();
+            }
+
+            var seats = _seatsService.GetSeatsByAuditoriumId(id);
+            ViewBag.AudditoriumName = auditorium.AuditoriumName;
+
+            return View(seats);
+        }
+        [HttpGet]
+        public IActionResult GetSeatsGrid(int id)
+        {
+            var seatRows = _seatsService.GetSeatsGroupedByRow(id);
+            if (seatRows == null || seatRows.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return PartialView("GetSeatsGrid", seatRows);
         }
     }
 }

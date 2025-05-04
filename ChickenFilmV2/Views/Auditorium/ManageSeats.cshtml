@@ -1,0 +1,26 @@
+﻿@model List<ChickenFilmV2.Models.Seat>
+@{
+    ViewBag.Title = "Quản lý ghế";
+}
+
+<h2>Danh sách ghế - Phòng: @ViewBag.AuditoriumName</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Số ghế</th>
+            <th>Loại ghế</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var seat in Model)
+        {
+            <tr>
+                <td>@seat.SeatNumber</td>
+                <td>@seat.SeatType</td>
+                @(seat.IsAvailable == true ? "Còn trống" : "Không khả dụng")
+            </tr>
+        }
+    </tbody>
+</table>

@@ -86,7 +86,7 @@ namespace ChickenFilmV2.Controllers
                     AgeRating = viewmodel.AgeRating,
                     Genre = viewmodel.Genre,
                     Duration = viewmodel.Duration,
-                    ReleaseDate = viewmodel.ReleaseDate,
+                    ReleaseDate = viewmodel.ReleaseDate ?? default,
                     Rating = viewmodel.Rating,
                     Status = viewmodel.Status,
                     Format = viewmodel.Format,

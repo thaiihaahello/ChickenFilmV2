@@ -34,9 +34,14 @@ html, body {
 }
 
     .left-side .logo {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
         margin-bottom: 10px;
+    }
+
+    .left-side h2 {
+        font-size: 20px;
+        font-family: 'Jacques Francois', serif;
     }
 
 /* Cột bên phải */

@@ -113,7 +113,7 @@ namespace ChickenFilmV2.Controllers
                     Gender = model.Gender,
                     Birthday = model.Birthday,
                     Email = model.Email,
-                    Password = model.Password, // ❗ Lưu trực tiếp mật khẩu không mã hóa
+                    Password = model.Password,
                     PhoneNumber = model.PhoneNumber,
                     Role = "Customer",
                     CreatedAt = DateTime.Now
