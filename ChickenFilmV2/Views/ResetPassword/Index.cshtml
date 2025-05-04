@@ -1,0 +1,51 @@
+﻿@model ChickenFilmV2.Models.ResetPassword
+@{
+    Layout = null;
+    ViewData["Title"] = "Quên Mật Khẩu";
+}
+
+<link rel="stylesheet" href="/css/rp.css"/>
+
+<div class="container">
+    <!-- Cột bên trái -->
+    <div class="left-side">
+        <img src="~/Images/Logo.png" alt="Logo" class="logo" />
+        <h2>SIX CHICKEN'S FILMS</h2>
+    </div>
+
+    <!-- Cột bên phải -->
+    <div class="right-side">
+        <h2>Quên Mật Khẩu</h2>
+
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        }
+
+        <form asp-action="ResetPassword" method="post">
+            <label asp-for="Email">Email đã đăng ký</label>
+            <input asp-for="Email" type="email" placeholder="Nhập email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+            <label asp-for="OldPassword">Mật khẩu cũ</label>
+            <input asp-for="OldPassword" type="password" placeholder="Nhập mật khẩu cũ" />
+            <span asp-validation-for="OldPassword" class="text-danger"></span>
+
+            <label asp-for="NewPassword">Mật khẩu mới</label>
+            <input asp-for="NewPassword" type="password" placeholder="Nhập mật khẩu mới" />
+            <span asp-validation-for="NewPassword" class="text-danger"></span>
+
+            <label asp-for="ConfirmPassword">Xác nhận mật khẩu mới</label>
+            <input asp-for="ConfirmPassword" type="password" placeholder="Nhập lại mật khẩu mới" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+            <button type="submit">Đổi mật khẩu</button>
+
+            <a href="/Home/Index" class="back-login">← Quay lại đăng nhập</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

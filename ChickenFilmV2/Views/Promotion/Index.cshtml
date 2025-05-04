@@ -1,0 +1,68 @@
+﻿@model List<ChickenFilmV2.Models.Promotion>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Quản Lý Khuyến Mãi</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/css/popup.css">
+</head>
+<body>
+	<div class="main-content">
+		<h2 class="mb-4 text-center">Quản lý Khuyến Mãi</h2>
+
+		<div class="table-wrapper">
+			<div class="btn-group-custom mb-3 text-right">
+				<a href="/Promotion/Add" class="btn btn-success">Tạo khuyến mãi</a>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead class="thead-dark">
+						<tr>
+							<th>Mã khuyến mãi</th>
+							<th>Phần trăm giảm</th>
+							<th>Số lượng</th>
+							<th>Đã dùng</th>
+							<th>Giá trị tối đa</th>
+							<th>Trạng thái</th>
+							<th>Thời gian</th>
+							<th>Hoạt động</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (Model != null && Model.Any())
+						{
+							foreach (var promo in Model)
+							{
+								<tr>
+									<td>@promo.Code</td>
+									<td>@promo.Discount%</td>
+									<td>@promo.MaxUsage</td>
+									<td>@(promo.UsedCount ?? 0)</td>
+									<td>@(promo.MinOrderValue.HasValue ? promo.MinOrderValue.Value.ToString("N0") : "0")</td>
+									<td>@((promo.IsActive.HasValue && promo.IsActive.Value) ? "Hoạt động" : "Hết hạn")</td>
+									<td>@promo.StartDate.ToDateTime(new TimeOnly(0, 0)).ToString("dd/MM/yyyy") - @promo.EndDate.ToDateTime(new TimeOnly(0, 0)).ToString("dd/MM/yyyy")</td>
+									<td>
+										<a class="btn btn-primary btn-sm" href="/Promotion/Update/@promo.PromotionId">Sửa</a>
+										<form asp-action="Delete" asp-controller="Promotion" method="post" style="display:inline;">
+											<input type="hidden" name="id" value="@promo.PromotionId" />
+											<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa khuyến mãi này không?');">
+												Xóa
+											</button>
+										</form>
+									</td>
+								</tr>
+							}
+						}
+						else
+						{
+							<tr>
+								<td colspan="9" class="text-center">Không có dữ liệu khuyến mãi.</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>

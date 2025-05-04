@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Thanh toán VNPAY";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vnpay.css" />
+}
+
+@section Scripts {
+    <script src="~/js/VNPay.js"></script>
+}
+
+<div class="countdown">
+    Giao dịch hết hạn sau <span id="countdown">05:00</span>
+</div>
+
+<div class="note-warning">
+     Quý khách vui lòng không tắt trình duyệt cho đến khi nhận được kết quả giao dịch trên website.
+    Trường hợp đã thanh toán nhưng chưa nhận kết quả, vui lòng bấm “<a href='#'>Tại đây</a>” để nhận kết quả.
+</div>
+
+<div class="container">
+    <div class="left">
+        <h3>Thông tin đơn hàng</h3>
+        <p>Số tiền thanh toán: <span> VNĐ</span></p>
+        <p>Giá trị đơn hàng: <span>Amount VNĐ</span></p>
+        <p>Phí giao dịch: <span>0 VNĐ</span></p>
+        <p>Mã đơn hàng: <br /><span>OrderId</span></p>
+        <p>Nhà cung cấp: <br /><span>Name</span></p>
+    </div>
+
+    <div class="right">
+        <h3>Quét mã qua ứng dụng Ngân hàng / Ví điện tử</h3>
+        <img src="" alt="QR Code" class="qr-img" />
+        <p class="qr-note">Scan to Pay</p>
+
+        <form asp-action="Cancel" method="post">
+            <button type="submit" class="btn-cancel">Hủy thanh toán</button>
+        </form>
+    </div>
+</div> 

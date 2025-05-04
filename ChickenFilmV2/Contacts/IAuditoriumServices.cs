@@ -9,5 +9,7 @@ namespace ChickenFilmV2.Contacts
         public void AddAuditorium(Auditorium auditorium);
         public void UpdateAuditorium(Auditorium auditorium);
         public void DeleteAuditorium(int id);
+
+        public List<string> GetAuditoriumNames();
     }
 }

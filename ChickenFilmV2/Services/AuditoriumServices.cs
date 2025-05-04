@@ -43,5 +43,12 @@ namespace ChickenFilmV2.Services
                 _context.SaveChanges();
             }
         }
+        public List<string> GetAuditoriumNames()
+        {
+            return _context.Auditoriums
+                .Select(a => a.AuditoriumName)
+                .Distinct()
+                .ToList();
+        }
     }
 }

@@ -1,0 +1,145 @@
+﻿body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.section-box {
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: none;
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.table {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .table thead {
+        background-color: #f1f3f5;
+        font-weight: bold;
+    }
+
+    .table td,
+    .table th {
+        vertical-align: middle !important;
+    }
+
+.form-label {
+    font-weight: bold;
+}
+
+.action-icons i {
+    font-size: 20px;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+    .action-icons i:hover {
+        transform: scale(1.2);
+    }
+
+.status {
+    font-weight: 600;
+}
+
+    .status:contains("Đã chiếu") {
+        color: red;
+    }
+
+    .status:contains("Đang chiếu") {
+        color: green;
+    }
+
+    .status:contains("Sắp chiếu") {
+        color: #007bff;
+    }
+
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+    .form-label {
+        font-size: 14px;
+    }
+}
+
+.search-panel {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+}
+
+.search-panel {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+}
+
+.status {
+    font-weight: 600;
+}
+
+.status-done {
+    color: red;
+}
+
+.status-playing {
+    color: green;
+}
+
+.status-upcoming {
+    color: #007bff;
+}
+
+.custom-btn-create {
+    background-color: #42A5F5;
+    color: black;
+    border: none;
+}
+
+    .custom-btn-create:hover {
+        background-color: #3085cb;
+    }
+
+
+select.form-select {
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    box-shadow: none;
+    transition: border-color 0.2s ease;
+}
+
+    select.form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.25);
+    }
+
+.custom-btn-search {
+    background-color: #42A5F5; /* xanh biển */
+    color: black;
+    border: none;
+}
+
+    .custom-btn-search:hover {
+        background-color: #2b85cf;
+    }

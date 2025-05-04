@@ -1,6 +1,4 @@
-﻿@model ChickenFilmV2.Models.User
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,9 +8,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/js/bootstrap.js" />
     @RenderSection("Styles", required: false)
     <link rel="stylesheet" href="~/css/layout_main.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 </head>
 <body>
-    <header>
+    <header id="header">
         <nav class="navbar navbar-expand-sm navbar-dark header">
             <div class="container-fluid row">
                 <a class="navbar-brand col-md-2" asp-controller="Home" asp-action="Index">
@@ -21,7 +21,8 @@
                 <div class="collapse navbar-collapse col-md-10 row" id="mynavbar">
                     <ul class="navbar-nav col-md-7 row">
                         <li class="nav-item col-md-2">
-                            <a class="nav-link" href="/Booking/Booking" style="text-align:center">Mua vé</a>
+                            <a class="nav-link" href="/Booking/Booking">Mua vé</a>
+
                         </li>
                         <li class="nav-item col-md-2">
                             <a class="nav-link" href="/Movie/ListPhim" style="text-align:center">Phim</a>
@@ -29,12 +30,15 @@
                         <li class="nav-item col-md-3">
                             <a class="nav-link" href="/Notification/Notification" style="text-align:center">Thông báo</a>
                         </li>
+                        <li class="nav-item col-md-1">
+                            <a class="nav-link" href="/Blog" style="text-align:center">Blog</a>
+                        </li>
                     </ul>
-                    <form class="d-flex col-md-3">
+                    <form class="d-flex col-md-2">
                         <input class="form-control me-2" type="text" placeholder="Search">
                         <button class="btn btn-danger" type="button">Search</button>
                     </form>
-                    <ul class="navbar-nav col-md-2">
+                    <ul class="navbar-nav col-md-3">
                         <li class="nav-item dropdown">
                             @if (User.Identity != null && User.Identity.IsAuthenticated)
                             {
@@ -85,7 +89,7 @@
                     <p class="footer-content">GÓC ĐIỆN ẢNH</p>
                     <ul class="footer-content">
                         <li><a style="text-decoration: none; color: #901D1D" href="/Movie/ListPhim">Phim</a></li>
-                        <li><a style="text-decoration: none; color: #901D1D" href="">Blog điện ảnh</a></li>
+                        <li><a style="text-decoration: none; color: #901D1D" href="#blog">Blog điện ảnh</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 footer-col-logo">

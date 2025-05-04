@@ -1,0 +1,113 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Thanh toán vé xem phim";
+    Layout = "~/Views/Shared/_Layout_Main.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Payment.css" />
+}
+
+<div class="process mt-3">
+    <div class="row text-center fw-bold">
+        <div class="col step done" data-step="1" id="step1">Chọn phim/Rạp/Suất</div>
+        <div class="col step done" data-step="2" id="step2">Chọn ghế</div>
+        <div class="col step active" data-step="3" id="step3">Khuyến mãi</div>
+        <div class="col step" data-step="4" id="step4">Thanh toán</div>
+        <div class="col step" data-step="5" id="step5">Xác nhận</div>
+    </div>
+    <div class="progress mt-1">
+        <div class="progress-bar" id="progressBar" style="width: 60%;"></div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Phần nhập mã khuyến mãi + Phương thức thanh toán -->
+        <div class="col-md-6 offset-md-1">
+            <div class="card p-3">
+                <h5>Khuyến mãi</h5>
+                <input type="text" class="form-control mb-2" id="promoCode" placeholder="Mã khuyến mãi" />
+                <button class="btn apply-btn" id="applyPromoBtn" disabled>Áp dụng</button> <!-- Vô hiệu hóa nút Áp dụng -->
+                <p class="text-muted mt-2" id="promoMessage">
+                    Lưu ý: Chỉ có thể áp dụng 1 voucher vào 1 lần thanh toán
+                </p>
+            </div>
+            <div class="card p-3 mt-3">
+                <h5>Phương thức thanh toán</h5>
+                <div class="d-flex align-items-center">
+                    <img src="~/images/VNPAY.png" alt="VNPAY" width="80" />
+                    <span class="ms-2">VNPAY</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin vé -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>@ViewBag.MovieTitle</h5>
+                <p class="text-muted">2D Phụ Đề</p>
+                <img src="@ViewBag.MoviePoster" alt="Poster" class="img-fluid mb-3" style="max-width: 150px" />
+                <p><strong>@ViewBag.TheaterName</strong></p>
+                <p>Suất: @ViewBag.Showtime</p>
+                @foreach (var seat in ViewBag.Seats as List<Seat>)
+                {
+                    <p>@seat.SeatNumber</p>
+                }
+
+                <hr />
+                <p><strong>Tổng cộng:</strong> @ViewBag.TotalAmount VNĐ</p>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-secondary w-50">Quay lại</button>
+                    <button class="btn pay-btn w-50">Thanh toán</button>
+                </div>
+                <button class="btn cancel-btn w-50 mt-2">Hủy giao dịch</button>
+            </div>
+        </div>
+
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+<!-- Modal Thông tin đặt vé -->
+<div id="ticketModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 class="text-center">THÔNG TIN ĐẶT VÉ</h2>
+        <div class="ticket-info">
+            <div class="ticket-section">
+                <h4>Phim</h4>
+                <div class="info-box">
+                    <strong>@ViewBag.MovieTitle</strong>
+                    <p>2D Phụ Đề</p>
+                </div>
+            </div>
+
+            <div class="ticket-section">
+                <h4>Rạp</h4>
+                <div class="info-box">
+                    <strong>@ViewBag.TheaterName</strong>
+                    <p>Suất: @ViewBag.Showtime</p>
+                    <p>Ghế:</p>
+                    @foreach (var seat in ViewBag.Seats as List<Seat>)
+                    {
+                        <p>@seat.SeatNumber</p>
+                    }
+                </div>
+            </div>
+
+            <div class="total-section">
+                <h4>Tổng</h4>
+                <p>@ViewBag.TotalAmount VNĐ</p>
+            </div>
+
+            <button class="pay-btn w-100" onclick="redirectToPayment()">Thanh toán</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Payment.js"></script>
+}

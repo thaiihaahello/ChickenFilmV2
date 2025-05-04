@@ -45,10 +45,13 @@ public partial class MovieDbContext : DbContext
 
     public virtual DbSet<Theater> Theaters { get; set; }
 
+    public virtual DbSet<TicketPricing> TicketPricings { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+
         => optionsBuilder.UseSqlServer("Data Source=VIETHUNG;Database=MovieDB;User Id=sa;Password=123;TrustServerCertificate=true;Trusted_Connection=SSPI;Encrypt=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -171,6 +174,7 @@ public partial class MovieDbContext : DbContext
         {
             entity.HasKey(e => e.BookingId).HasName("PK__Bookings__5DE3A5B1EC03F3CB");
 
+
             entity.Property(e => e.BookingId).HasColumnName("booking_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
@@ -197,6 +201,7 @@ public partial class MovieDbContext : DbContext
 
         modelBuilder.Entity<BookingAffiliate>(entity =>
         {
+
             entity.HasKey(e => e.BookingAffiliateId).HasName("PK__Booking___CE3287CFB0140D8C");
 
             entity.ToTable("Booking_Affiliate");
@@ -306,7 +311,6 @@ public partial class MovieDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("director");
             entity.Property(e => e.Duration).HasColumnName("duration");
-            entity.Property(e => e.EndDate).HasColumnName("end_date");
             entity.Property(e => e.Format)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -387,7 +391,6 @@ public partial class MovieDbContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("min_order_value");
             entity.Property(e => e.StartDate).HasColumnName("start_date");
-            entity.Property(e => e.TheaterId).HasColumnName("theater_id");
             entity.Property(e => e.UsedCount)
                 .HasDefaultValue(0)
                 .HasColumnName("used_count");
@@ -489,6 +492,30 @@ public partial class MovieDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("theater_name");
             entity.Property(e => e.TotalTheaters).HasColumnName("total_theaters");
+        });
+
+        modelBuilder.Entity<TicketPricing>(entity =>
+        {
+            entity.HasKey(e => e.PricingId).HasName("PK__Ticket_P__A25A9FB76274B7DA");
+
+            entity.ToTable("Ticket_Pricing");
+
+            entity.HasIndex(e => new { e.AuditoriumId, e.SeatType }, "unique_pricing_rule").IsUnique();
+
+            entity.Property(e => e.PricingId).HasColumnName("pricing_id");
+            entity.Property(e => e.AuditoriumId).HasColumnName("auditorium_id");
+            entity.Property(e => e.Price)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("price");
+            entity.Property(e => e.SeatType)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("seat_type");
+
+            entity.HasOne(d => d.Auditorium).WithMany(p => p.TicketPricings)
+                .HasForeignKey(d => d.AuditoriumId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Ticket_Pr__audit__114A936A");
         });
 
         modelBuilder.Entity<User>(entity =>

@@ -1,0 +1,29 @@
+﻿.promotion-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.promotion-popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.popup-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-wrapper {
+    padding: 0 40px; /* khoảng trống hai bên */
+}
