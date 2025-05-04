@@ -29,17 +29,27 @@ namespace ChickenFilmV2
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Account/Login";
-                    options.LogoutPath = "/Account/Logout";
-                    options.AccessDeniedPath = "/Account/AccessDenied";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                    options.SlidingExpiration = true;
+                    options.LoginPath = "/Account/Login"; // ???ng d?n ??n trang ??ng nh?p
+                    options.LogoutPath = "/Account/Logout"; // ???ng d?n ??n trang ??ng xu?t
+                    options.AccessDeniedPath = "/Account/AccessDenied"; // ???ng d?n ??n trang kh�ng c� quy?n
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Th?i gian h?t h?n c?a cookie
+                    options.SlidingExpiration = true; // H?i sinh cookie n?u ng??i d�ng t??ng t�c
                 });
             builder.Services.AddScoped<AdminDashboardViewModel>();           
             builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
 
+            // ??ng k� DbContext cho MovieDbContext
+            builder.Services.AddDbContext<MovieDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             // Đăng ký MVC Controllers và Views
             builder.Services.AddControllersWithViews();
+
+            // C?u h�nh Authorization (B?t t�nh n?ng x�c th?c)
+            builder.Services.AddAuthorization(options =>
+            {
+                // ??nh ngh?a policy n?u c?n (V� d?: ch? cho ph�p Admin truy c?p)
+                // options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+            });
 
             var app = builder.Build();
 
@@ -53,11 +63,12 @@ namespace ChickenFilmV2
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // Use authentication and authorization
-            app.UseAuthentication();
-            app.UseAuthorization();
-
+            // C?u h�nh Routing tr??c Authentication v� Authorization
             app.UseRouting();
+
+            // D�ng Authentication v� Authorization
+            app.UseAuthentication(); // D�ng Authentication ?? nh?n di?n ng??i d�ng
+            app.UseAuthorization();   // D�ng Authorization ?? ki?m tra quy?n truy c?p
 
             // Default route
             app.MapControllerRoute(
