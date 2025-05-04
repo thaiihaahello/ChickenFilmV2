@@ -18,42 +18,90 @@
         });
 
         const percent = ((currentStep + 1) / steps.length) * 100;
-        progressBar.style.width = `${percent}%`; // ✅ Sửa cú pháp template literal
+        progressBar.style.width = `${percent}%`; // Cập nhật thanh tiến trình
     }
 
-    updateProgressStep(1); // Bắt đầu tại bước 0
+    updateProgressStep(0); // Bắt đầu tại bước 0
 
     // Lấy các phần tử cần thiết từ DOM
-    const seats = document.querySelectorAll(".seat:not(.unavailable)"); // Tất cả ghế có thể chọn
     const selectedSeatsInput = document.getElementById("selectedSeatsInput"); // Input ẩn để gửi ghế đã chọn
     const selectedSeatsSpan = document.getElementById("selectedSeats"); // Hiển thị ghế đã chọn
     const totalPriceSpan = document.getElementById("totalPrice"); // Hiển thị tổng tiền
     const totalAmountSpan = document.getElementById("totalAmount"); // Hiển thị tổng tiền (VNĐ)
 
-    // Giá vé cho từng loại ghế
-    const seatPrices = {
-        "seat-standard": 50000,
-        "seat-vip": 70000,
-        "seat-deluxe": 90000,
-        "seat-couple": 120000
-    };
+    // Biến lưu trữ giá ghế theo loại
+    let seatPrices = {};
+
+    // Hàm lấy giá ghế từ API
+    async function fetchSeatPrices(auditoriumId) {
+        try {
+            // Gọi API để lấy giá ghế
+            const response = await fetch(`/Booking/GetSeatPrices?auditoriumId=${auditoriumId}`);
+
+            // Kiểm tra nếu response không thành công
+            if (!response.ok) {
+                throw new Error(`Failed to fetch seat prices: ${response.statusText}`);
+            }
+
+            // Chuyển đổi dữ liệu từ JSON
+            const data = await response.json();
+
+            // Kiểm tra nếu dữ liệu trả về trống
+            if (!Array.isArray(data) || data.length === 0) {
+                console.warn("No seat prices found.");
+                return;
+            }
+
+            console.log("Seat prices data:", data);
+
+            // Cập nhật giá ghế vào seatPrices
+            seatPrices = data.reduce((acc, curr) => {
+                if (curr.seatType && curr.price) {  // Sử dụng seatType và price với chữ thường
+                    acc[curr.seatType] = curr.price;  // Lưu giá ghế theo loại ghế
+                } else {
+                    console.warn("Invalid seat data:", curr);
+                }
+                return acc;
+            }, {});
+
+            console.log("Seat prices after fetching:", seatPrices);
+
+            // Sau khi dữ liệu ghế được tải, cập nhật lại thông tin ghế đã chọn
+            updateSelectedSeats();
+
+            // Lắng nghe sự kiện click trên các ghế sau khi lấy giá ghế
+            setupSeatSelection();
+
+        } catch (error) {
+            console.error("Error fetching seat prices:", error);
+        }
+    }
 
     // Lắng nghe sự kiện click trên các ghế
-    seats.forEach(seat => {
-        seat.addEventListener("click", function () {
-            if (!seat.classList.contains("unavailable")) { // Kiểm tra ghế có sẵn không
-                this.classList.toggle("selected"); // Thêm hoặc bỏ lớp "selected" khi click
-                updateSelectedSeats(); // Cập nhật danh sách ghế đã chọn
-            }
+    function setupSeatSelection() {
+        const seats = document.querySelectorAll(".seat:not(.unavailable)"); // Tất cả ghế có thể chọn
+        seats.forEach(seat => {
+            seat.addEventListener("click", function () {
+                if (!seat.classList.contains("unavailable")) { // Kiểm tra ghế có sẵn không
+                    this.classList.toggle("selected"); // Thêm hoặc bỏ lớp "selected" khi click
+                    updateSelectedSeats(); // Cập nhật danh sách ghế đã chọn
+                }
+            });
         });
-    });
+    }
 
     // Hàm cập nhật ghế đã chọn và tính tổng tiền
     function updateSelectedSeats() {
         const selectedIds = [];
         let totalAmount = 0;
 
-        // Định nghĩa đối tượng chứa ghế theo loại
+        const seatTypeMap = {
+            "seat-standard": "Standard",
+            "seat-vip": "VIP",
+            "seat-deluxe": "Deluxe",
+            "seat-couple": "Couple"
+        };
+
         const seatCategories = {
             "seat-standard": [],
             "seat-vip": [],
@@ -61,25 +109,30 @@
             "seat-couple": []
         };
 
-        // Duyệt qua tất cả ghế đã chọn
         document.querySelectorAll(".seat.selected").forEach(seat => {
-            selectedIds.push(seat.dataset.seatNumber); // Thêm ID ghế vào danh sách đã chọn
+            selectedIds.push(seat.dataset.seatNumber);
 
-            // Tìm class loại ghế của ghế được chọn
             const seatClass = Array.from(seat.classList).find(c => c.startsWith("seat-"));
             if (seatClass) {
-                seatCategories[seatClass].push(seat.dataset.seatNumber); // Phân loại ghế
-                totalAmount += seatPrices[seatClass] || 0; // Cộng giá ghế vào tổng tiền
+                seatCategories[seatClass].push(seat.dataset.seatNumber);
+
+                const seatType = seatTypeMap[seatClass];
+                const price = seatPrices[seatType] || 0;
+                totalAmount += price;
+
+                console.log(`Ghế: ${seat.dataset.seatNumber}, Loại: ${seatType}, Giá: ${price}`);
             }
         });
 
-        // Cập nhật thông tin ghế đã chọn
-        selectedSeatsInput.value = selectedIds.join(","); // Gửi danh sách ID ghế đã chọn
-        displaySelectedSeats(seatCategories); // Hiển thị thông tin ghế đã chọn
-        totalPriceSpan.innerText = totalAmount.toLocaleString("vi-VN"); // Cập nhật tổng tiền
-        totalAmountSpan.innerText = totalAmount.toLocaleString("vi-VN"); // Cập nhật tổng tiền (VNĐ)
+        console.log("Tổng tiền hiện tại:", totalAmount);
+
+        selectedSeatsInput.value = selectedIds.join(",");
+        displaySelectedSeats(seatCategories);
+        totalPriceSpan.innerText = totalAmount.toLocaleString("vi-VN");
+        totalAmountSpan.innerText = totalAmount.toLocaleString("vi-VN");
         document.getElementById("totalAmountInput").value = totalAmount;
     }
+
 
     // Hàm hiển thị thông tin ghế đã chọn
     function displaySelectedSeats(seatCategories) {
@@ -89,7 +142,7 @@
         for (let category in seatCategories) {
             if (seatCategories[category].length > 0) {
                 const seatCategoryName = getSeatCategoryName(category); // Lấy tên loại ghế
-                seatInfo += `${seatCategoryName}: ${seatCategories[category].join(", ")} <br />`; // ✅ Sửa cú pháp
+                seatInfo += `${seatCategoryName}: ${seatCategories[category].join(", ")} <br />`;
             }
         }
 
@@ -115,4 +168,15 @@
         }
     }
 
+    // Lấy giá ghế khi trang tải (cần truyền auditoriumId vào)
+    const auditoriumId = parseInt(document.getElementById("auditoriumId").value);
+    fetchSeatPrices(auditoriumId); // Gọi hàm lấy giá ghế khi tải trang
+
+});
+document.getElementById("seatForm").addEventListener("submit", function (event) {
+    console.log("Selected Seats:", selectedSeatsInput.value); // In ra giá trị ghế đã chọn
+    if (selectedSeatsInput.value === "") {
+        alert("Vui lòng chọn ghế trước khi tiếp tục.");
+        event.preventDefault(); // Ngừng gửi form nếu không có ghế nào được chọn
+    }
 });
