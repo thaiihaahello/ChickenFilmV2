@@ -23,12 +23,10 @@ namespace ChickenFilmV2.ViewModels
         // Danh sách suất chiếu nhóm theo ngày (mỗi ngày có nhiều giờ chiếu)
         public List<ShowtimeByDateViewModel> GroupedShowtimesByDate { get; set; }
     }
-
-
+  
     public class ShowtimeByDateViewModel
     {
         public DateTime Date { get; set; }  // Ngày chiếu
         public List<string> TimeSlots { get; set; }  // Danh sách giờ chiếu dạng "HH:mm"
     }
-
 }

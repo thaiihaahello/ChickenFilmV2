@@ -1,0 +1,55 @@
+﻿@model ChickenFilmV2.Models.TicketPricing
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cập Nhật Giá Vé</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/css/popup.css">
+</head>
+<body>
+	<div class="main-content">
+		<h2 class="mb-4 text-center">Cập Nhật Giá Vé</h2>
+
+		<div id="promotion-popup" class="promotion-popup-overlay">
+			<div class="promotion-popup-content">
+				<form method="post" asp-action="Update" asp-controller="Ticket">
+					<div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+					<input type="hidden" asp-for="PricingId" />
+
+					<div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+					<label asp-for="AuditoriumId"></label>
+					@Html.DropDownListFor(model => model.AuditoriumId,
+											new SelectList(ViewBag.Auditoriums, "AuditoriumId", "AuditoriumName"),
+											"-- Chọn phòng chiếu --",
+											new { @class = "form-control mb-2" })
+					<span asp-validation-for="AuditoriumId" class="text-danger"></span>
+
+					<label for="SeatType">Loại Ghế:</label>
+					<select id="SeatType" asp-for="SeatType" class="form-control mb-2">
+						<option value="">-- Chọn loại ghế --</option>
+						<option value="Vip">Vip</option>
+						<option value="Standard">Standard</option>
+						<option value="Couple">Couple</option>
+						<option value="Deluxe">Deluxe</option>
+					</select>
+
+					<label for="Price">Giá Vé:</label>
+					<input type="number" asp-for="Price" step="0.01" class="form-control mb-3" required />
+
+					<div class="popup-buttons">
+						<button type="submit" class="btn btn-success">Cập Nhật</button>
+						<a href="/Ticket/Index" class="btn btn-secondary">Hủy</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

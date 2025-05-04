@@ -1,6 +1,13 @@
-using ChickenFilmV2.Models;
+
+ï»¿using ChickenFilmV2.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using ChickenFilmV2.Contacts;
+using ChickenFilmV2.Models;
+using ChickenFilmV2.Services;
+using Microsoft.EntityFrameworkCore;
+using ChickenFilmV2.Services.Interfaces.ChickenFilmV2.Services.Interfaces;
+using ChickenFilmV2.ViewModels;
 
 namespace ChickenFilmV2
 {
@@ -12,6 +19,11 @@ namespace ChickenFilmV2
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<MovieDbContext>(options =>
+
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IMoviesServices, MoviesServices>();
+            builder.Services.AddScoped<IAuditoriumServices, AuditoriumServices>();
 
             // Add authentication using Cookie
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -19,19 +31,23 @@ namespace ChickenFilmV2
                 {
                     options.LoginPath = "/Account/Login"; // ???ng d?n ??n trang ??ng nh?p
                     options.LogoutPath = "/Account/Logout"; // ???ng d?n ??n trang ??ng xu?t
-                    options.AccessDeniedPath = "/Account/AccessDenied"; // ???ng d?n ??n trang không có quy?n
+                    options.AccessDeniedPath = "/Account/AccessDenied"; // ???ng d?n ??n trang khï¿½ng cï¿½ quy?n
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Th?i gian h?t h?n c?a cookie
-                    options.SlidingExpiration = true; // H?i sinh cookie n?u ng??i dùng t??ng tác
+                    options.SlidingExpiration = true; // H?i sinh cookie n?u ng??i dï¿½ng t??ng tï¿½c
                 });
+            builder.Services.AddScoped<AdminDashboardViewModel>();           
+            builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
 
-            // ??ng ký DbContext cho MovieDbContext
+            // ??ng kï¿½ DbContext cho MovieDbContext
             builder.Services.AddDbContext<MovieDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // ÄÄƒng kÃ½ MVC Controllers vÃ  Views
+            builder.Services.AddControllersWithViews();
 
-            // C?u hình Authorization (B?t tính n?ng xác th?c)
+            // C?u hï¿½nh Authorization (B?t tï¿½nh n?ng xï¿½c th?c)
             builder.Services.AddAuthorization(options =>
             {
-                // ??nh ngh?a policy n?u c?n (Ví d?: ch? cho phép Admin truy c?p)
+                // ??nh ngh?a policy n?u c?n (Vï¿½ d?: ch? cho phï¿½p Admin truy c?p)
                 // options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
 
@@ -47,12 +63,12 @@ namespace ChickenFilmV2
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // C?u hình Routing tr??c Authentication và Authorization
+            // C?u hï¿½nh Routing tr??c Authentication vï¿½ Authorization
             app.UseRouting();
 
-            // Dùng Authentication và Authorization
-            app.UseAuthentication(); // Dùng Authentication ?? nh?n di?n ng??i dùng
-            app.UseAuthorization();   // Dùng Authorization ?? ki?m tra quy?n truy c?p
+            // Dï¿½ng Authentication vï¿½ Authorization
+            app.UseAuthentication(); // Dï¿½ng Authentication ?? nh?n di?n ng??i dï¿½ng
+            app.UseAuthorization();   // Dï¿½ng Authorization ?? ki?m tra quy?n truy c?p
 
             // Default route
             app.MapControllerRoute(
