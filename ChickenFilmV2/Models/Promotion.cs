@@ -7,8 +7,6 @@ public partial class Promotion
 {
     public int PromotionId { get; set; }
 
-    public int TheaterId { get; set; }
-
     public string Code { get; set; } = null!;
 
     public decimal Discount { get; set; }
@@ -24,6 +22,4 @@ public partial class Promotion
     public int MaxUsage { get; set; }
 
     public int? UsedCount { get; set; }
-
-    public virtual Theater Theater { get; set; } = null!;
 }

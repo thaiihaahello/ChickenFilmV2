@@ -1,0 +1,134 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<ChickenFilmV2.ViewModels.SeatViewModel>
+@{
+    ViewData["Title"] = "Chọn ghế";
+    Layout = "~/Views/Shared/_Layout_Main.cshtml";
+    var showtimeId = ViewBag.ShowtimeId;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/SeatSelection.css" />
+}
+
+<!-- Thanh tiến trình -->
+<div class="process mt-3">
+    <div class="row text-center fw-bold">
+        <div class="col step done" data-step="1" id="step1">Chọn phim/Rạp/Suất</div>
+        <div class="col step active" data-step="2" id="step2">Chọn ghế</div>
+        <div class="col step" data-step="3" id="step3">Khuyến mãi</div>
+        <div class="col step" data-step="4" id="step4">Thanh toán</div>
+        <div class="col step" data-step="5" id="step5">Xác nhận</div>
+
+    </div>
+    <div class="progress mt-1">
+        <div class="progress-bar" id="progressBar" style="width: 40%;"></div>
+    </div>
+
+    <!-- Nội dung chính -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Phần đổi suất chiếu + Chọn ghế -->
+            <div class="col-md-6 offset-md-1">
+                <!-- Đổi suất chiếu -->
+                <div class="card p-3">
+                    <h5>Đổi suất chiếu</h5>
+                    <div class="time-container">
+                        <button class="btn time-btn" data-time="17:30">17:30</button>
+                        <button class="btn time-btn" data-time="19:00">19:00</button>
+                        <button class="btn time-btn" data-time="21:00">21:00</button>
+                        <button class="btn time-btn" data-time="22:30">22:30</button>
+                    </div>
+                </div>
+
+                <!-- Chọn ghế -->
+                <div class="card p-3 mt-3">
+                    <h5>Chọn ghế</h5>
+                    <div class="screen text-center mb-2">Màn hình</div>
+                    <div class="seat-map">
+                        @foreach (var rowGroup in Model.GroupBy(s => s.SeatNumber.Substring(0, 1)))
+                        {
+                            <div class="seat-row">
+                                @foreach (var seat in rowGroup.OrderBy(s =>
+                               {
+                                   var numberPart = new string(s.SeatNumber.Skip(1).ToArray());
+                                   return int.TryParse(numberPart, out int n) ? n : 0;
+                               }))
+                                {
+                                    var seatTypeClass = seat.SeatType switch
+                                    {
+                                        "VIP" => "seat-vip",
+                                        "Deluxe" => "seat-deluxe",
+                                        "Couple" => "seat-couple",
+                                        _ => "seat-standard"
+                                    };
+
+                                    <button class="seat @seatTypeClass @(seat.IsAvailable ? "" : "unavailable")"
+                                            data-seat-id="@seat.SeatId"
+                                            data-seat-type="@seat.SeatType"
+                                            data-seat-number="@seat.SeatNumber"
+                                            data-seat-price="@seat.Price"
+                                    @(seat.IsAvailable ? "" : "disabled")>
+                                        @seat.SeatNumber
+                                    </button>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Ghi chú loại ghế -->
+                    <div class="seat-legend mt-3">
+                        <div class="legend-item"><span class="seat seat-standard"></span> Ghế thường</div>
+                        <div class="legend-item"><span class="seat seat-vip"></span> Ghế VIP</div>
+                        <div class="legend-item"><span class="seat seat-deluxe"></span> Ghế Deluxe</div>
+                        <div class="legend-item"><span class="seat seat-couple"></span> Ghế Couple</div>
+                        <div class="legend-item"><span class="seat selected"></span> Đã chọn</div>
+                        <div class="legend-item"><span class="seat unavailable"></span> Đã đặt</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin vé -->
+            <!-- Thông tin vé -->
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <!-- Thông tin phim và suất chiếu -->
+                    <div class="movie-info">
+                        <img src="@ViewBag.MoviePoster" alt="poster" class="movie-poster img-fluid mb-3" style="max-width: 150px" />
+                        <div class="movie-details">
+                            <h5 id="selectedMovie">@ViewBag.MovieTitle</h5>
+                            <p class="text-muted">2D Phụ Đề</p>
+                            <p id="showtime">Suất chiếu: <span id="selectedShowtime">@ViewBag.Showtime</span></p>
+                            <p id="theater">Rạp: <span id="selectedTheater">@ViewBag.TheaterName</span></p>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <p>Ghế đang chọn: <span id="selectedSeats">Chưa chọn ghế</span></p>
+                    <p>Tổng tiền: <span id="totalPrice">0</span> đ</p>
+                    <hr />
+                    <p><strong>Tổng cộng:</strong> <span class="float-end" id="totalAmount">0</span> VNĐ</p>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="/Booking/Booking" class="btn btn-secondary w-50">Quay lại</a>
+                        <button type="submit" class="btn btn-danger w-50" form="seatForm">Tiếp tục</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Form ẩn để gửi dữ liệu -->
+    <form id="seatForm" method="post" asp-controller="Booking" asp-action="Payment">
+        <input type="hidden" name="showtimeId" value="@showtimeId" />
+        <input type="hidden" name="selectedSeats" id="selectedSeatsInput" />
+        <input type="hidden" name="totalAmount" id="totalAmountInput" />
+
+    </form>
+    </div>
+
+    @section Scripts {
+        <script src="~/js/SeatSelection.js"></script>
+    }

@@ -1,0 +1,109 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using ChickenFilmV2.ViewModels
+@model BookingViewModel
+@{
+
+}
+
+
+<link rel="stylesheet" href="~/css/Booking.css" />
+
+
+
+<div class="process mt-3">
+    <div class="row text-center fw-bold">
+        <div class="col step" id="step1">Chọn phim/Rạp/Suất</div>
+        <div class="col step" id="step2">Chọn ghế</div>
+        <div class="col step" id="step3">Khuyến mãi</div>
+        <div class="col step" id="step4">Thanh toán</div>
+        <div class="col step" id="step5">Xác nhận</div>
+    </div>
+    <div class="progress mt-1">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+</div>
+
+
+<div class="panel-container">
+    <div class="left-panel">
+        <div class="section">
+            <h3>Chọn rạp</h3>
+            <div class="custom-dropdown">
+                <div class="dropdown-trigger">
+                    <span id="selectedTheaterText">Chọn rạp</span>
+                    <i class="dropdown-arrow">▼</i>
+                </div>
+                <div class="dropdown-content">
+                    @foreach (var theater in Model.Theaters)
+                    {
+                        <button class="location-button" data-theater-id="@theater.TheaterId">@theater.TheaterName</button>
+                    }
+                </div>
+                <input type="hidden" id="theaterSelect" name="TheaterId" value="" />
+            </div>
+        </div>
+
+        <div class="section mt-3">
+            <h3>Chọn phim</h3>
+            <div class="custom-dropdown" id="movieDropdown">
+
+                <div class="dropdown-trigger">
+                    <span id="selectedMovieText">Chọn phim</span>
+                    <i class="dropdown-arrow">▼</i>
+                </div>
+                <div class="dropdown-content">
+                    @foreach (var movie in Model.DangChieu)
+                    {
+                        <button class="movie-button"
+                                data-movie-id="@movie.MovieId"
+                                data-title="@movie.Title"
+                                data-poster="@Url.Content(movie.PosterUrl)">
+                            <img src="@Url.Content(movie.PosterUrl)" alt="@movie.Title" class="movie-poster" />
+                            @movie.Title
+                        </button>
+                    }
+                </div>
+                <input type="hidden" id="movieSelect" name="MovieId" value="" />
+            </div>
+        </div>
+
+
+
+        <div class="section mt-3">
+            <h3>Chọn suất</h3>
+            <div class="custom-dropdown">
+                <div class="dropdown-trigger">
+                    <span id="selectedShowtimeText">Chọn suất chiếu</span>
+                    <i class="dropdown-arrow">▼</i>
+                </div>
+                <div class="dropdown-content" id="showtimeDropdown">
+                    <!-- Các suất chiếu sẽ được thêm vào đây bằng JS -->
+                </div>
+                <input type="hidden" id="showtimeSelect" name="ShowtimeId" value="" />
+            </div>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="movie-info">
+            <img src="/images/placeholder.png" alt="poster" class="movie-poster">
+            <div class="movie-details">
+                <p id="selectedMovie">-</p> <!-- Tên phim -->
+                <p id="showtime">Suất chiếu: <span id="selectedShowtime">-</span></p>
+                <p id="theater">Rạp: <span id="selectedTheater">-</span></p>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="back-btn">Quay lại</button>
+            <button class="continue-btn">Tiếp tục</button>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Booking.js"></script>
+}
