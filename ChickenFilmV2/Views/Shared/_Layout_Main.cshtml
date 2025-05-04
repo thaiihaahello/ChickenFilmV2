@@ -18,8 +18,8 @@
                 <a class="navbar-brand col-md-2" asp-controller="Home" asp-action="Index">
                     <img src="https://i.postimg.cc/RF08HRCC/Logo.png" alt="Logo" class="rounded-pill header-logo">
                 </a>
-                <div class="collapse navbar-collapse col-md-10 row" id="mynavbar">
-                    <ul class="navbar-nav col-md-7 row">
+                <div class="collapse navbar-collapse col-md-10 row" id="mynavbar" >
+                    <ul class="navbar-nav col-md-9 row">
                         <li class="nav-item col-md-2">
                             <a class="nav-link" href="/Booking/Booking">Mua vé</a>
 
@@ -27,18 +27,14 @@
                         <li class="nav-item col-md-2">
                             <a class="nav-link" href="/Movie/ListPhim" style="text-align:center">Phim</a>
                         </li>
+                        <li class="nav-item col-md-2">
+                            <a class="nav-link" href="/Blog" style="text-align:center">Blog</a>
+                        </li>
                         <li class="nav-item col-md-3">
                             <a class="nav-link" href="/Notification/Notification" style="text-align:center">Thông báo</a>
                         </li>
-                        <li class="nav-item col-md-1">
-                            <a class="nav-link" href="/Blog" style="text-align:center">Blog</a>
-                        </li>
                     </ul>
-                    <form class="d-flex col-md-2">
-                        <input class="form-control me-2" type="text" placeholder="Search">
-                        <button class="btn btn-danger" type="button">Search</button>
-                    </form>
-                    <ul class="navbar-nav col-md-3">
+                    <ul class="navbar-nav col-md-3" style="gap: 40px">
                         <li class="nav-item dropdown">
                             @if (User.Identity != null && User.Identity.IsAuthenticated)
                             {
@@ -89,7 +85,7 @@
                     <p class="footer-content">GÓC ĐIỆN ẢNH</p>
                     <ul class="footer-content">
                         <li><a style="text-decoration: none; color: #901D1D" href="/Movie/ListPhim">Phim</a></li>
-                        <li><a style="text-decoration: none; color: #901D1D" href="#blog">Blog điện ảnh</a></li>
+                        <li><a style="text-decoration: none; color: #901D1D" href="/Blog">Blog điện ảnh</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 footer-col-logo">

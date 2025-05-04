@@ -51,6 +51,9 @@ namespace ChickenFilmV2
                 // options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
 
+            builder.Services.AddScoped<IBlogService, BlogService>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -1,0 +1,20 @@
+﻿.like-btn {
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    align-items: center;
+    gap: 5px;
+}
+
+.movie-list-item1 {
+    margin-top: 30px;
+}
+
+.movie-header {
+    font-weight: bold;
+    border-left: 3px solid #901D1D;
+}
