@@ -1,0 +1,91 @@
+﻿@model ChickenFilmV2.ViewModelManager.MovieViewModel
+
+<div class="modal fade" id="createMovieModal" tabindex="-1" aria-labelledby="createMovieModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" asp-action="Create" asp-controller="Movies" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createMovieModalLabel">Thêm phim mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tên phim</label>
+                            <input type="text" class="form-control" asp-for="Title" placeholder="Nhập tên phim" required />
+
+                            <label class="form-label mt-3">Trailer</label>
+                            <input type="text" class="form-control" asp-for="TrailerUrl" placeholder="Link trailer" />
+
+                            <label class="form-label mt-3">Nội dung phim</label>
+                            <textarea class="form-control" asp-for="Description" placeholder="Nội dung phim"></textarea>
+
+                            <label class="form-label mt-3">Thể loại</label>
+                            <input type="text" class="form-control" asp-for="Genre" placeholder="Thể loại" />
+
+                            <label class="form-label mt-3">Đạo diễn</label>
+                            <input type="text" class="form-control" asp-for="Director" placeholder="Đạo diễn" />
+
+                            <label class="form-label mt-3">Diễn viên</label>
+                            <input type="text" class="form-control" asp-for="Cast" placeholder="Diễn viên" />
+
+                            <label class="form-label mt-3">Độ tuổi xem phim</label>
+                            <input type="text" class="form-control" asp-for="AgeRating" placeholder="Độ tuổi" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Ngày chiếu</label>
+                            <input type="date" class="form-control" asp-for="ReleaseDate" />
+
+                            <label class="form-label mt-3">Thời lượng (phút)</label>
+                            <input type="number" class="form-control" asp-for="Duration" placeholder="Thời lượng" />
+
+                            <label class="form-label mt-3">Trạng thái</label>
+                            <select class="form-select" asp-for="Status">
+                                <option value="">--Chọn--</option>
+                                <option value="Đang chiếu">Đang chiếu</option>
+                                <option value="Sắp chiếu">Sắp chiếu</option>
+                            </select>
+
+                            <label class="form-label mt-3">Hình thức chiếu</label>
+                            <select class="form-select" asp-for="Format">
+                                <option value="">--Chọn--</option>
+                                <option value="2D">2D</option>
+                                <option value="3D">3D</option>
+                                <option value="IMAX">IMAX</option>
+                            </select>
+
+                            <label class="form-label mt-3">Hình thức dịch</label>
+                            <select class="form-select" asp-for="Language">
+                                <option value="">--Chọn--</option>
+                                <option value="sub">Lồng tiếng</option>
+                                <option value="dubbed">Phụ đề</option>
+                            </select>
+
+                            <label class="form-label mt-3">Poster</label>
+                            <input type="file" class="form-control" name="PosterUrl" />
+
+                            <label class="form-label mt-3">Banner</label>
+                            <input type="file" class="form-control" name="BannerUrl" />
+
+                            <label class="form-label mt-3">Quốc gia</label>
+                            <input type="text" class="form-control" asp-for="Country" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Movies/CreateMovie.css">
+}

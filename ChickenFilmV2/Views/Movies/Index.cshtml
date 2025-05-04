@@ -1,0 +1,64 @@
+﻿@model List<ChickenFilmV2.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+<div class="container-fluid mt-3 align-items-center">
+    <div class="container-fluid mt-3">
+        <div class="button-container d-flex mb-3">
+            <button class="btn btn-primary"><i class='bx bx-arrow-back'></i> Quay lại</button>
+            <button class=" open-btn btn-secondary ml-3" onclick="openModal()">
+                <i class='bx bx-plus'></i> Tạo phim
+            </button>
+        </div>
+        @await Html.PartialAsync("Create", new ChickenFilmV2.ViewModelManager.MovieViewModel())
+        @foreach (var movies in Model)
+        {
+            <a href="@Url.Action("Edit", "Movies", new { id = movies.MovieId})" class="movie-card-link">
+                <div class="movie-card">
+                    <div class="poster">
+                        <img src="@Url.Content($"~/{movies.PosterUrl?.TrimStart('/') ?? ""}")" alt="Poster phim" class="movie-poster">
+                    </div>
+                    <div class="details">
+                        <h1 class="title">
+                            @movies.Title <span class="age">@movies.AgeRating +</span>
+                        </h1>
+                        <p><strong>Đạo diễn: </strong>@movies.Director</p>
+                        <p><strong>Diễn viên: </strong>@movies.Cast</p>
+                        <p><strong>Thể loại: </strong>@movies.Genre</p>
+                        <p><strong>Khởi chiếu: </strong>@movies.ReleaseDate.ToString("dd/MM/yyyy")</p>
+                        <p><strong>Thời lượng: </strong>@movies.Duration phút</p>
+                        <p>
+                            <a href="@movies.TrailerUrl" target="_blank">Trailer</a>
+                        </p>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Khởi tạo modal bằng Bootstrap 5
+        const createMovieModal = new bootstrap.Modal(document.getElementById('createMovieModal'), {
+            keyboard: false // Tắt việc đóng modal khi nhấn ESC
+        });
+
+        // Hàm mở modal
+        window.openModal = function () {
+            createMovieModal.show();
+        }
+
+        // Hàm đóng modal
+        window.closeModal = function () {
+            createMovieModal.hide();
+        }
+    });
+</script>
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Movies/IndexMovie.css">
+}

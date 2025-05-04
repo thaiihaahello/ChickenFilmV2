@@ -1,0 +1,89 @@
+﻿@model ChickenFilmV2.ViewModels.AdminDashboardViewModel;
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+      <!-- Set Layout -->
+}
+<style >
+    /* Custom styling for Admin Dashboard Table */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        margin-left: 250px;
+        padding-top: 100px;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #5a5454;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    td a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        td a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+    .status-online {
+        color: rgb(100, 248, 100);
+    }
+    </style>
+
+    <!-- Phim -->
+    <!-- Main Content -->
+    <div class="container">
+
+        <h3>Movies</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var movie in Model.Movies)
+                {
+                    <tr>
+                        <td>@movie.MovieId</td>
+                        <td>@movie.Title</td>
+                        <td>@movie.Rating</td>
+                        <td>
+                            <a href="@Url.Action("MovieDetails", new { id = movie.MovieId })">View Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

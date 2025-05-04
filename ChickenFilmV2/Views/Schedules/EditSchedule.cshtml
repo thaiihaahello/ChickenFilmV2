@@ -1,0 +1,38 @@
+﻿@model ChickenFilmV2.ViewModelManager.ScheduleViewModel
+
+<div class="container mt-5">
+    <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-labelledby="createScheduleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" asp-action="EditSchedule" asp-controller="Schedules">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createScheduleModalLabel">Sửa lịch chiếu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div>
+                        <input type="hidden" class="form-control" name="MovieId" readonly />
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Tên phòng chiếu</label>
+                            <input type="text" class="form-control" name="Title" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ngày bắt đầu</label>
+                            <input type="date" class="form-control" name="ReleaseDate" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ngày kết thúc</label>
+                            <input type="date" class="form-control" name="EndDate" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

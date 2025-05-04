@@ -1,0 +1,103 @@
+﻿@model ChickenFilmV2.Models.User
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ChickenFilmV2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/js/bootstrap.js" />
+    @RenderSection("Styles", required: false)
+    <link rel="stylesheet" href="~/css/layout_main.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark header">
+            <div class="container-fluid row">
+                <a class="navbar-brand col-md-2" asp-controller="Home" asp-action="Index">
+                    <img src="https://i.postimg.cc/RF08HRCC/Logo.png" alt="Logo" class="rounded-pill header-logo">
+                </a>
+                <div class="collapse navbar-collapse col-md-10 row" id="mynavbar">
+                    <ul class="navbar-nav col-md-7 row">
+                        <li class="nav-item col-md-2">
+                            <a class="nav-link" href="/Booking/Booking" style="text-align:center">Mua vé</a>
+                        </li>
+                        <li class="nav-item col-md-2">
+                            <a class="nav-link" href="/Movie/ListPhim" style="text-align:center">Phim</a>
+                        </li>
+                        <li class="nav-item col-md-3">
+                            <a class="nav-link" href="/Notification/Notification" style="text-align:center">Thông báo</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex col-md-3">
+                        <input class="form-control me-2" type="text" placeholder="Search">
+                        <button class="btn btn-danger" type="button">Search</button>
+                    </form>
+                    <ul class="navbar-nav col-md-2">
+                        <li class="nav-item dropdown">
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                <div class="user-info dropdown-toggle" style="color: white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>👋 Xin chào, <strong>@User.Identity.Name</strong></span>
+                                </div>
+                                <ul class="dropdown-menu danger" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Profile" asp-action="View">Trang cá nhân</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Account/Login">Đăng nhập</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Account/Register">Đăng kí</a>
+                            </li>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer>
+        <div class="footer">
+            <div class="row">
+                <div class="col-md-4 footer-col">
+                    <p class="footer-content">GIỚI THIỆU</p>
+                    <ul class="footer-content">
+                        <li>Hot line: 0123456789</li>
+                        <li>Email: abc123@gmail.com</li>
+                        <li>Địa chỉ: FPT Complex</li>
+                    </ul>
+                </div>
+                <div class="col-md-5 footer-col">
+                    <p class="footer-content">GÓC ĐIỆN ẢNH</p>
+                    <ul class="footer-content">
+                        <li><a style="text-decoration: none; color: #901D1D" href="/Movie/ListPhim">Phim</a></li>
+                        <li><a style="text-decoration: none; color: #901D1D" href="">Blog điện ảnh</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-col-logo">
+                    <img src="https://i.postimg.cc/RF08HRCC/Logo.png" alt="Logo" class="footer-logo">
+                    <div class="footer-content">SIX CHICKENS FILMS</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿@model List<ChickenFilmV2.Models.Movie>
+
+@{
+    var scheduleVm = new ChickenFilmV2.ViewModelManager.ScheduleViewModel
+            {
+                Movies = Model
+            };
+}
+
+@await Html.PartialAsync("CreateSchedule", scheduleVm)
+
+<div class="section-box bg-section-2">
+    <div class="d-flex mb-4 mt-3">
+        <button class="btn btn-primary btn-sm ms-4" data-bs-toggle="modal" data-bs-target="#createScheduleModal">
+            + Tạo lịch chiếu
+        </button>
+    </div>
+
+    <table class="table table-bordered align-middle text-center">
+        <thead class="table-light">
+            <tr>
+                <th>Phim chiếu</th>
+                <th>Lịch chiếu</th>
+                <th>Phân loại</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        @await Html.PartialAsync("EditSchedule", new ChickenFilmV2.ViewModelManager.ScheduleViewModel())
+        <tbody> 
+            @foreach (var movie in Model.Where(m => m.EndDate != default))
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td>@movie.ReleaseDate.ToString("dd/MM/yyyy") - @movie.EndDate.ToString("dd/MM/yyyy")</td>
+                    <td>@movie.Status</td>
+                    <td class="action-icons">
+                        <a href="#" class="btn-edit" data-bs-toggle="modal" data-bs-target="#editScheduleModal"
+                        data-title="@movie.Title" data-release="@movie.ReleaseDate"
+                        data-end="@movie.EndDate" data-id="@movie.MovieId">
+                        <i class='bx bxs-pencil' style='color:#0860f8'></i>
+                        </a>
+                        <a href="#" title="Xoá" onclick="return confirm('Bạn chắc chắn muốn xoá?')">
+                            <i class='bx bx-trash-alt' style='color:#ff0d0d'></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Khởi tạo modal
+        const createScheduleModal = new bootstrap.Modal(document.getElementById('createScheduleModal'), {
+        keyboard: false
+    });
+        // Hàm mở modal
+        window.openModal = function () {
+            createScheduleModal.show();
+        }
+
+        // Hàm đóng modal
+        window.closeModal = function () {
+            createScheduleModal.hide();
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButtons = document.querySelectorAll(".btn-edit");
+
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modal = document.getElementById("editScheduleModal");
+                modal.querySelector("input[name*='MovieId']").value = this.dataset.id;
+                modal.querySelector("input[name*='Title']").value = this.dataset.title;
+                modal.querySelector("input[name*='ReleaseDate']").value = this.dataset.release;
+                modal.querySelector("input[name*='EndDate']").value = this.dataset.end;
+            });
+        });
+    });
+    </script>

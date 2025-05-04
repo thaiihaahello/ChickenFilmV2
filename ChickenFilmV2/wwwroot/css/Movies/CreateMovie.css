@@ -1,0 +1,29 @@
+﻿textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: #736868;
+    color: white;
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
+
+textarea.form-control {
+    height: 125px; /* Tăng chiều cao theo ý bạn, ví dụ 150px */
+    resize: vertical; /* Cho phép người dùng kéo lên xuống, có thể để "none" nếu muốn cố định */
+    font-size: 14px; /* Tăng hoặc giảm size chữ nếu muốn */
+}
+
+.form-label {
+    font-weight: bold;
+}

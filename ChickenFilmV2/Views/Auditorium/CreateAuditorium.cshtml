@@ -1,0 +1,56 @@
+﻿@model ChickenFilmV2.ViewModelManager.AuditoriumViewModel
+
+<div class="container mt-5">
+    <div class="modal fade" id="createRoomModal" tabindex="-1" aria-labelledby="createRoomModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+                <div class="modal-content">
+            <form method="post" asp-action="CreateAuditorium" asp-controller="Auditorium">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createRoomModalLabel">Tạo phòng chiếu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" asp-for="TheaterId" />
+                        <div class="mb-3">
+                            <label class="form-label">Tên phòng chiếu</label>
+                            <input type="text" class="form-control" asp-for="AuditoriumName" placeholder="Nhập tên phòng" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Loại phòng chiếu</label>
+                            <select class="form-select" asp-for="AuditoriumType">
+                                <option value="">--Chọn--</option>
+                                <option value="2D">2D</option>
+                                <option value="3D">3D</option>
+                                <option value="IMAX">IMAX</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số lượng ghế</label>
+                            <input type="number" class="form-control" asp-for="TotalSeats" placeholder="Nhập số ghế" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số hàng</label>
+                            <input type="number" class="form-control" asp-for="RowNumber" placeholder="Nhập số ghế" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số cột </label>
+                            <input type="number" class="form-control" asp-for="ColumnNumber"  placeholder="Nhập số ghế" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Tạo phòng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Auditorium/IndexAuditorium.css">
+}

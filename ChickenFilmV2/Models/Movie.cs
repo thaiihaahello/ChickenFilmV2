@@ -19,7 +19,9 @@ public partial class Movie
 
     public int Duration { get; set; }
 
-    public DateOnly ReleaseDate { get; set; }
+    public DateTime ReleaseDate { get; set; }
+
+    public DateTime EndDate { get; set; }
 
     public decimal? Rating { get; set; }
 
