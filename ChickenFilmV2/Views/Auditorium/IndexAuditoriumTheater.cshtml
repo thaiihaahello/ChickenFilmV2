@@ -57,7 +57,9 @@
                         <td>@auditorium.ColumnNumber</td>
                         <td>@auditorium.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
                         <td class="action-icons">
-                            <a href="#"><i class='bx bx-grid' style='color:#800080'></i></a>
+                            <a href="#" class="btn-view-seats" data-id="@auditorium.AuditoriumId" data-bs-toggle="modal" data-bs-target="#seatGridModal">
+                                <i class='bx bx-grid' style='color:#800080'></i>
+                            </a>
                             <a href="#" class="btn-edit" data-bs-toggle="modal" data-bs-target="#editRoomModal"
                                data-id="@auditorium.AuditoriumId" data-name="@auditorium.AuditoriumName"
                                data-type="@auditorium.AuditoriumType" data-rows="@auditorium.RowNumber"

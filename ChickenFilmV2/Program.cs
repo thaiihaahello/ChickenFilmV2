@@ -3,7 +3,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using ChickenFilmV2.Contacts;
-using ChickenFilmV2.Models;
 using ChickenFilmV2.Services;
 using Microsoft.EntityFrameworkCore;
 using ChickenFilmV2.Services.Interfaces.ChickenFilmV2.Services.Interfaces;
@@ -20,10 +19,11 @@ namespace ChickenFilmV2
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<MovieDbContext>(options =>
-
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IMoviesServices, MoviesServices>();
             builder.Services.AddScoped<IAuditoriumServices, AuditoriumServices>();
+            builder.Services.AddScoped<IShowtimesServices, ShowtimesServices>();
+            builder.Services.AddScoped<ISeatsServices, SeatsServices>();
 
             // Add authentication using Cookie
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
