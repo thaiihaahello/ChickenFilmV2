@@ -1,0 +1,75 @@
+﻿@model ChickenFilmV2.Models.Blog
+
+@{
+    ViewData["Title"] = "Chi tiết Blog";
+}
+@{
+    var blog = ViewBag.Blog as ChickenFilmV2.Models.Blog;
+    var otherBlogs = ViewBag.OtherBlogs as List<ChickenFilmV2.Models.Blog>;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/BlogDetail.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+}
+
+<div style="margin-top: 30px">
+    <h2>@Model.BlogTitle</h2>
+    <div class="actions" style="margin-top: 5px;">
+        <button class="like-btn" data-type="like">👍 @Model.BlogLike Thích</button>
+        <button class="like-btn" data-type="dislike">👎 @Model.BlogDislike Không Thích</button>
+    </div>
+    <img src="@Model.BlogBanner" alt="@Model.BlogTitle" style="width: 100%; margin-bottom: 20px; margin-top: 20px" />
+    <div>@Html.Raw(Model.BlogContent)</div>
+    <div class="movie-list-item1">
+        <h4 class="movie-header">Bình luận phim khác</h4>
+    </div>
+    <div class="row">
+        @foreach (var item in otherBlogs)
+        {
+            <div class="col">
+                <a href="@Url.Action("Detail", "Blog", new { id = item.BlogId })" style="text-decoration: none; color: inherit;">
+                    <div class="card h-100 border-0">
+                        <img src="@item.BlogBanner" class="card-img-top" alt="@item.BlogTitle" style="height: 180px; object-fit: cover;" />
+                        <div class="card-body px-0">
+                            <p class="card-text" style="font-size: 0.95rem;">@item.BlogTitle</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    const blogId = @Model.BlogId;
+
+    document.querySelector('.like-btn[data-type="like"]').addEventListener('click', function () {
+        if (localStorage.getItem(`liked_${blogId}`)) {
+            alert('Bạn đã thích bài viết này rồi.');
+            return;
+        }
+
+        fetch(`/Blog/Like/${blogId}`, { method: 'POST' })
+            .then(res => res.text())
+            .then(newCount => {
+                this.textContent = `👍 ${newCount} Thích`;
+                localStorage.setItem(`liked_${blogId}`, true);
+            });
+    });
+
+    document.querySelector('.like-btn[data-type="dislike"]').addEventListener('click', function () {
+        if (localStorage.getItem(`disliked_${blogId}`)) {
+            alert('Bạn đã không thích bài viết này rồi.');
+            return;
+        }
+
+        fetch(`/Blog/Dislike/${blogId}`, { method: 'POST' })
+            .then(res => res.text())
+            .then(newCount => {
+                this.textContent = `👎 ${newCount} Không Thích`;
+                localStorage.setItem(`disliked_${blogId}`, true);
+            });
+    });
+</script>
+

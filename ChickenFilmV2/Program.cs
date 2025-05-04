@@ -37,6 +37,9 @@ namespace ChickenFilmV2
             builder.Services.AddDbContext<MovieDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddScoped<IBlogService, BlogService>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

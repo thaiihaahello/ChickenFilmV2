@@ -1,0 +1,25 @@
+﻿@model List<ChickenFilmV2.Models.Blog>
+
+@{
+    ViewBag.Title = "Tất cả bài viết";
+}
+
+<h4 class="mt-4 mb-4" style="font-weight: bold; border-left: 3px solid #901D1D;">
+    Tất cả bài viết
+</h4>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    @foreach (var blog in Model)
+    {
+        <div class="col">
+            <a href="@Url.Action("Detail", "Blog", new { id = blog.BlogId })" style="text-decoration: none; color: inherit;">
+                <div class="card h-100 border-0">
+                    <img src="@blog.BlogBanner" class="card-img-top" alt="@blog.BlogTitle" style="height: 180px; object-fit: cover; border-radius: 10px" />
+                    <div class="card-body px-0">
+                        <p class="card-text" style="font-size: 0.95rem;">@blog.BlogTitle</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Góc điện ảnh";
+    var mainBlog = ViewBag.MainBlog as ChickenFilmV2.Models.Blog;
+    var sideBlogs = ViewBag.SideBlogs as List<ChickenFilmV2.Models.Blog>;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Homepage.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+}
+
+<div class="movie-list-item1">
+    <h4 class="movie-header">Góc điện ảnh</h4>
+</div>
+
+<div class="row">
+    <!-- Bài viết nổi bật -->
+    <div class="col-md-7 main-post">
+        <a href="@Url.Action("Detail", "Blog", new { id = mainBlog.BlogId })">
+            <img src="@mainBlog.BlogBanner" alt="@mainBlog.BlogTitle" />
+            <h2>@mainBlog.BlogTitle</h2>
+        </a>
+        <div style="display: flex; gap: 10px;">
+            <button class="like-btn">@mainBlog.BlogLike Thích</button>
+            <button class="like-btn">@mainBlog.BlogDislike Không Thích</button>
+        </div>
+    </div>
+
+    <!-- Bài viết nhỏ bên phải -->
+    <div class="col-md-5 side-posts">
+        @foreach (var blog in sideBlogs)
+        {
+            <div class="row side-post" style="margin-bottom: 15px;">
+                <div class="col-md-5">
+                    <a href="@Url.Action("Detail", "Blog", new { id = blog.BlogId })">
+                        <img src="@blog.BlogBanner" alt="@blog.BlogTitle" style="width: 100%; height: auto;" />
+                    </a>
+                </div>
+                <div class="col-md-7 post-actions">
+                    <a href="@Url.Action("Detail", "Blog", new { id = blog.BlogId })">
+                        <h3>@blog.BlogTitle</h3>
+                    </a>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="like-btn">@blog.BlogLike Thích</button>
+                        <button class="like-btn">@blog.BlogDislike Không Thích</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="text-end mt-2">
+    <a href="@Url.Action("All", "Blog")" class="btn btn-outline-danger">Xem tất cả bài viết</a>
+</div>
