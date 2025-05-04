@@ -33,17 +33,23 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
-                <i class='bx bx-memory-card'></i>
-                <span>Quản lý vé</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
-                <i class='bx bxs-discount'></i>
-                <span>Quản lý khuyến mãi</span>
-            </a>
-        </li>
+			<a class="sidebar-link" asp-controller="Ticket" asp-action="Index">
+				<i class='bx bx-memory-card'></i>
+				<span>Quản lý vé</span>
+			</a>
+		</li>
+		<li class="sidebar-item">
+			<a class="sidebar-link" asp-controller="Promotion" asp-action="Index">
+				<i class='bx bxs-discount'></i>
+				<span>Quản lý khuyến mãi</span>
+			</a>
+		</li>
+		<li class="sidebar-item">
+			<a href="/Home/AdminManageAffiliate" class="sidebar-link">
+				<i class='bx bx-memory-card'></i>
+				<span>Quản lý Affiliate</span>
+			</a>
+		</li>
     </ul>
     <div class="sidebar-footer">
         <a href="#" class="sidebar-link">

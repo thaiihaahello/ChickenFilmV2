@@ -1,0 +1,70 @@
+﻿@model ChickenFilmV2.Models.Promotion
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa Khuyến Mãi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/popup.css">
+</head>
+<body>
+    <div class="main-content">
+        <h2 class="mb-4">Chỉnh sửa Khuyến Mãi</h2>
+        <div id="promotion-popup" class="promotion-popup-overlay">
+            <div class="promotion-popup-content">
+                <form method="post" asp-action="Update" asp-route-id="@Model.PromotionId">
+
+                    <input type="hidden" asp-for="PromotionId" />
+
+                    <label for="Code">Tên mã khuyến mãi:</label>
+                    <input type="text" class="form-control" asp-for="Code" placeholder="Nhập tên mã khuyến mãi" required />
+                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+
+                    <label for="Discount">Phần trăm giảm (%):</label>
+                    <input type="number" class="form-control" asp-for="Discount" step="0.01" placeholder="Nhập phần trăm giảm" required />
+                    @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+
+                    <label for="MaxUsage">Số lượng mã:</label>
+                    <input type="number" class="form-control" asp-for="MaxUsage" placeholder="Nhập số lượng mã" required />
+                    @Html.ValidationMessageFor(model => model.MaxUsage, "", new { @class = "text-danger" })
+
+                    <label for="MinOrderValue">Giá trị đơn hàng tối thiểu:</label>
+                    <input type="number" class="form-control" asp-for="MinOrderValue" step="0.01" placeholder="Nhập giá trị tối thiểu" />
+                    @Html.ValidationMessageFor(model => model.MinOrderValue, "", new { @class = "text-danger" })
+
+                    <label for="IsActive">Trạng thái:</label>
+                    <select class="form-control" asp-for="IsActive" required>
+                        <option value="true">Hoạt động</option>
+                        <option value="false">Hết hạn</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+
+                    <div class="time-selection">
+                        <div class="time-group">
+                            <label for="StartDate">Ngày bắt đầu:</label>
+                            <input type="date" class="form-control" asp-for="StartDate" required />
+                        </div>
+                        <div class="time-group">
+                            <label for="EndDate">Ngày kết thúc:</label>
+                            <input type="date" class="form-control" asp-for="EndDate" required />
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="UsedCount" />
+
+                    <div class="popup-buttons mt-3">
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        <a href="/Promotion/Index" class="btn btn-secondary">Đóng</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

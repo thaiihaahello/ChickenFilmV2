@@ -1,0 +1,61 @@
+﻿@model ChickenFilmV2.Models.Promotion
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Khuyến Mãi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/popup.css">
+</head>
+<body>
+    <div class="main-content">
+        <h2 class="mb-4 text-center">Tạo Khuyến Mãi</h2>
+
+        <div id="promotion-popup" class="promotion-popup-overlay">
+            <div class="promotion-popup-content">
+                <form method="post" asp-action="Add">
+                    <input type="hidden" asp-for="PromotionId" />"
+
+                    <label for="Code">Tên mã khuyến mãi:</label>
+                    <input type="text" class="form-control" asp-for="Code" placeholder="Nhập tên mã khuyến mãi" required />
+
+                    <label for="Discount">Phần trăm giảm (%):</label>
+                    <input type="number" class="form-control" asp-for="Discount" step="0.01" placeholder="Nhập phần trăm giảm" required />
+
+                    <label for="MaxUsage">Số lượng mã:</label>
+                    <input type="number" class="form-control" asp-for="MaxUsage" placeholder="Nhập số lượng mã" required />
+
+                    <label for="MinOrderValue">Giá trị đơn hàng tối thiểu:</label>
+                    <input type="number" class="form-control" asp-for="MinOrderValue" step="0.01" placeholder="Nhập giá trị đơn tối thiểu" />
+
+                    <label for="IsActive">Trạng thái:</label>
+                    <select class="form-control" asp-for="IsActive" required>
+                        <option value="true">Hoạt động</option>
+                        <option value="false">Hết hạn</option>
+                    </select>
+
+                    <div class="time-selection">
+                        <div class="time-group">
+                            <label for="StartDate">Ngày bắt đầu:</label>
+                            <input type="date" class="form-control" asp-for="StartDate" required />
+                        </div>
+                        <div class="time-group">
+                            <label for="EndDate">Ngày kết thúc:</label>
+                            <input type="date" class="form-control" asp-for="EndDate" required />
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="UsedCount" value="0">
+
+                    <div class="popup-buttons">
+                        <button type="submit" class="btn btn-success">Tạo</button>
+                        <a href="/Promotion/Index" class="btn btn-secondary">Đóng</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

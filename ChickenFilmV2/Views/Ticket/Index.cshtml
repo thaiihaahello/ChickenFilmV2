@@ -1,0 +1,52 @@
+﻿@model List<ChickenFilmV2.Models.TicketPricing>
+
+@{
+	ViewBag.Title = "Quản Lý Giá Vé";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Quản Lý Khuyến Mãi</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/css/popup.css">
+</head>
+<body>
+	<h2 class="mb-4 text-center ">Quản Lý Giá Vé</h2>
+	<div class="table-wrapper">
+		<div class="btn-group-custom mb-3 text-right">
+			<a href="/Ticket/Add" class="btn btn-success">Thêm mới giá vé</a>
+		</div>
+
+		<table class="table table-bordered table-hover ">
+			<thead class="thead-dark">
+				<tr>
+					<th>Pricing ID</th>
+					<th>Auditorium ID</th>
+					<th>Loại Ghế</th>
+					<th>Giá Vé</th>
+					<th>Thao Tác</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>@item.PricingId</td>
+						<td>@item.Auditorium.AuditoriumName</td>
+						<td>@item.SeatType</td>
+						<td>@item.Price.ToString("N0") VND</td>
+						<td>
+							<a href="/Ticket/Update/@item.PricingId" class="btn btn-warning btn-sm">Sửa</a>
+							<form asp-action="Delete" method="post" asp-route-id="@item.PricingId" style="display:inline;">
+								<button type="submit" class="btn btn-danger btn-sm">Xoá</button>
+							</form>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
