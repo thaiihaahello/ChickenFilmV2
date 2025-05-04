@@ -6,8 +6,8 @@ namespace ChickenFilmV2.ViewModelManager
     {
         public int MovieId { get; set; }
         public string Title { get; set; } = null!;
-        public DateOnly? ReleaseDate { get; set; }
-        public DateOnly? EndDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public List<Movie>? Movies { get; set; }
     }
 }

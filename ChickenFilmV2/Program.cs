@@ -7,6 +7,7 @@ using ChickenFilmV2.Services;
 using Microsoft.EntityFrameworkCore;
 using ChickenFilmV2.Services.Interfaces.ChickenFilmV2.Services.Interfaces;
 using ChickenFilmV2.ViewModels;
+using ChickenFilmV2.Services.Interfaces;
 
 namespace ChickenFilmV2
 {
@@ -24,6 +25,10 @@ namespace ChickenFilmV2
             builder.Services.AddScoped<IAuditoriumServices, AuditoriumServices>();
             builder.Services.AddScoped<IShowtimesServices, ShowtimesServices>();
             builder.Services.AddScoped<ISeatsServices, SeatsServices>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+          
+            
 
             // Add authentication using Cookie
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -37,10 +42,6 @@ namespace ChickenFilmV2
                 });
             builder.Services.AddScoped<AdminDashboardViewModel>();           
             builder.Services.AddScoped<IShowtimeService, ShowtimeService>();
-
-            // ??ng k� DbContext cho MovieDbContext
-            builder.Services.AddDbContext<MovieDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             // Đăng ký MVC Controllers và Views
             builder.Services.AddControllersWithViews();
 

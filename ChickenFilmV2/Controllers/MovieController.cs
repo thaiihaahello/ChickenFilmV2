@@ -32,15 +32,15 @@ namespace ChickenFilmV2.Controllers
 
             // Phim đang chiếu: ShowDate <= hôm nay và Status là "playing"
             var dangChieu = allMovies
-                .Where(m => m.Showtimes.Any(s =>
-                    s.ShowDate.HasValue && s.ShowDate.Value <= today && s.Status == "Đang chiếu"))
-                .ToList();
+    .Where(m => m.Showtimes.Any(s =>
+        s.ShowDate.HasValue && DateOnly.FromDateTime(s.ShowDate.Value) <= today && s.Status == "Đang chiếu"))
+    .ToList();
 
             // Phim sắp chiếu: ShowDate > hôm nay và Status là "scheduled"
             var sapChieu = allMovies
-                .Where(m => m.Showtimes.Any(s =>
-                    s.ShowDate.HasValue && s.ShowDate.Value > today && s.Status == "Sắp chiếu"))
-                .ToList();
+     .Where(m => m.Showtimes.Any(s =>
+         s.ShowDate.HasValue && DateOnly.FromDateTime(s.ShowDate.Value) > today && s.Status == "Sắp chiếu"))
+     .ToList();
 
             // Tạo ViewModel với các danh sách phim
             var viewModel = new ListPhimViewModel
@@ -89,16 +89,18 @@ namespace ChickenFilmV2.Controllers
 
             // Nhóm suất chiếu theo ngày và format
             var groupedShowtimes = showtimes
-                .GroupBy(s => s.ShowDate.Value.ToDateTime(TimeOnly.MinValue).Date)  // Nhóm theo ngày
+                .Where(s => s.ShowDate.HasValue) // tránh lỗi khi ShowDate bị null
+                .GroupBy(s => s.ShowDate.Value.Date)  // Nhóm theo ngày (DateTime.Date)
                 .Select(g => new ShowtimeByDateViewModel
                 {
-                    Date = g.Key,
-                    TimeSlots = g.OrderBy(x => x.ShowTime1)  // Sắp xếp theo giờ chiếu
-                                 .Select(x => x.ShowTime1.ToString(@"HH\:mm"))  // Định dạng giờ chiếu
-                                 .ToList()
+                    Date = g.Key,  // Kiểu DateTime
+                    TimeSlots = g.OrderBy(x => x.ShowTime1)
+                     .Select(x => x.ShowTime1.ToString(@"HH\:mm"))  // 24h format
+                     .ToList()
                 })
-                .OrderBy(g => g.Date)  // Sắp xếp theo ngày
-                .ToList();
+                    .OrderBy(g => g.Date)
+    .ToList();
+
 
             // Tạo ViewModel và truyền dữ liệu cho View
             var viewModel = new MovieDetailViewModel
@@ -112,7 +114,7 @@ namespace ChickenFilmV2.Controllers
                 Director = movie.Director,
                 Cast = movie.Cast,
                 Country = movie.Country,
-                ReleaseDate = movie.ReleaseDate.ToDateTime(TimeOnly.MinValue),
+                ReleaseDate = movie.ReleaseDate,
                 Description = movie.Description,
 
                 ShowDates = groupedShowtimes.Select(g => g.Date).ToList(),

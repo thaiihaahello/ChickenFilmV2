@@ -48,7 +48,7 @@ namespace ChickenFilmV2.Services
                 .AsQueryable();
             if (showDate != null)
             {
-                query = query.Where(s => s.ShowDate == showDate);   
+                query = query.Where(s => s.ShowDate == showDate);
             }
             if (!string.IsNullOrEmpty(AuditoriumName))
             {
@@ -61,10 +61,10 @@ namespace ChickenFilmV2.Services
                 MovieTitle = s.Movie.Title,
                 AuditoriumId = s.AuditoriumId,
                 Language = s.Movie.Language,
-                Format = s.Movie.Format,    
+                Format = s.Movie.Format,
                 AuditoriumName = s.Auditorium.AuditoriumName,
                 ShowDate = s.ShowDate,
-                ShowTime1 = s.ShowTime1,
+                Showtimes = s.ShowTime1,
                 Status = s.Status
             }).ToList();
             return showtimeViewModels;

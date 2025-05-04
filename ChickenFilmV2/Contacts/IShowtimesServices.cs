@@ -10,6 +10,6 @@ namespace ChickenFilmV2.Contacts
         public void UpdateShowtime(Showtime showtime);
         public void DeleteShowtime(int id);
 
-        List<ShowtimeViewModel> SearchShowtimes(string? AuditoriumName, DateOnly? showDate);
+        //List<ShowtimeViewModel> SearchShowtimes(string? AuditoriumName, DateOnly? showDate);
     }
 }

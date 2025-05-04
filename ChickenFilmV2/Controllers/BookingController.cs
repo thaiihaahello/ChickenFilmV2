@@ -20,7 +20,7 @@ namespace ChickenFilmV2.Controllers
 
         public IActionResult Booking()
         {
-            DateOnly today = DateOnly.FromDateTime(DateTime.Today); // Lấy ngày hôm nay
+            DateTime today = DateTime.Today; // Lấy ngày hôm nay
 
             var model = new BookingViewModel
             {
@@ -133,7 +133,7 @@ namespace ChickenFilmV2.Controllers
         public IActionResult ApplyPromoCode(string promoCode, decimal totalAmount)
         {
             // Kiểm tra mã khuyến mãi có hợp lệ không
-            var today = DateOnly.FromDateTime(DateTime.Now); // Chuyển DateTime thành DateOnly để so sánh
+            var today = DateTime.Now; // Chuyển DateTime thành DateOnly để so sánh
 
             var promotion = _context.Promotions
                 .FirstOrDefault(p => p.Code == promoCode && p.IsActive == true

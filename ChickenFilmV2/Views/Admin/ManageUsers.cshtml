@@ -1,0 +1,159 @@
+﻿@model List<ChickenFilmV2.Models.User>
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .page-wrapper {
+        max-width: 1500px;
+        margin: 60px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        padding: 40px;
+        margin-left: 300px;
+        margin-top: 100px;
+    }
+
+    .buttonUser, .buttonBack {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 15px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 20px;
+        margin-right: 10px;
+    }
+
+    .buttonUser {
+        background-color: deepskyblue;
+    }
+
+        .buttonUser:hover {
+            background-color: #0ca3dd;
+        }
+
+    .buttonBack {
+        background-color: #6c757d;
+    }
+
+        .buttonBack:hover {
+            background-color: #5a6268;
+        }
+
+
+    .table-users {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .table-users th,
+        .table-users td {
+            text-align: center;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+        }
+
+        .table-users th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table-users img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+        }
+
+    .btn-action {
+        margin: 2px;
+        padding: 6px 10px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 6px;
+    }
+
+    .btn-info {
+        background-color: #0dcaf0;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-secondary {
+        margin-top: 20px;
+    }
+
+    .btn-info:hover,
+    .btn-warning:hover,
+    .btn-danger:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<div class="page-wrapper">
+    <h3 class="mb-4">Danh sách tài khoản</h3>
+    <p class="mb-4">Tổng số tài khoản: <strong>@Model.Count</strong></p>
+    <button class="buttonUser" onclick="window.location.href='@Url.Action("AddNewAccount", "Admin")'">
+        ➕ Thêm mới tài khoản
+    </button>
+    <table class="table-users">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Vai trò</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>Avatar</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserId</td>
+                    <td>@user.FullName</td>
+                    <td>@user.Role</td>
+                    <td>@(user.Gender ? "Nam" : "Nữ")</td>
+                    <td>@user.Birthday.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <img src="~/images/@user.Avatar" alt="avatar" />
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DetailsUser", "Admin", new { id = user.UserId })" class="btn btn-info btn-sm btn-action">Chi tiết</a>
+                        <a href="@Url.Action("EditUser", "Admin", new { id = user.UserId })" class="btn btn-warning btn-sm btn-action">Sửa</a>
+                        <a href="@Url.Action("DeleteUser", "Admin", new { id = user.UserId })"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Bạn có chắc muốn xóa tài khoản này không?');">Xóa</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Admin")">⬅ Quay lại trang chủ</a>
+</div>
+
+@section Scripts {
+    <!-- Nếu cần thêm JS xử lý riêng -->
+}

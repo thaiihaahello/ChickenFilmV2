@@ -45,7 +45,7 @@ namespace ChickenFilmV2.Controllers
 
             var viewModel = new FilterShowtimeViewModel
             {
-                Showtime = showtimes,
+                //Showtime = showtimes,
                 SearchAuditoriumName = searchAuditoriumName,
                 SearchShowDate = searchShowDate,
                 AuditoriumName = _auditoriumServices.GetAuditoriumNames(),
@@ -61,8 +61,8 @@ namespace ChickenFilmV2.Controllers
         {
             var showtimes = _showtimesServices.SearchShowtimes(searchAuditoriumName, searchShowDate);
 
-            var movies = _movieServices.GetAllMovies(); 
-            var auditoriums = _auditoriumServices.GetAllAuditoriums(); 
+            var movies = _movieServices.GetAllMovies();
+            var auditoriums = _auditoriumServices.GetAllAuditoriums();
             var selectedAuditorium = auditoriums.FirstOrDefault(a => a.AuditoriumName == searchAuditoriumName);
 
             var createModel = new ShowtimeViewModel
@@ -123,7 +123,7 @@ namespace ChickenFilmV2.Controllers
                 AuditoriumId = viewmodel.AuditoriumId,
                 MovieId = viewmodel.MovieId,
                 ShowDate = viewmodel.ShowDate ?? default,
-                ShowTime1 = viewmodel.ShowTime1
+                ShowTime1 = viewmodel.Showtimes
             };
 
             _showtimesServices.AddShowtime(showtime); // Thêm Showtime vào cơ sở dữ liệu

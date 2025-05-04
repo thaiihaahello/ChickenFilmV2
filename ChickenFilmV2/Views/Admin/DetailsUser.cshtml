@@ -1,0 +1,111 @@
+﻿@model ChickenFilmV2.Models.User
+
+@{
+    ViewData["Title"] = "Chi tiết tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    <style >
+    .page-wrapper {
+        max-width: 1500px;
+        margin: 80px auto;
+        background-color: #fff;
+        border-radius: 16px;
+        padding: 40px;
+        margin-left: 300px;
+        margin-top: 100px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .back-button {
+        margin-bottom: 20px;
+    }
+
+        .back-button button {
+            padding: 10px 22px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+            .back-button button:hover {
+                background-color: #5a6268;
+            }
+
+    .user-detail-content {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .user-avatar-container {
+        flex: 0 0 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .user-avatar {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid #eee;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-info {
+        flex: 1;
+    }
+
+    .section-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #222;
+    }
+
+    .user-info ul {
+        list-style: none;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    .user-info li strong {
+        width: 160px;
+        display: inline-block;
+        color: #111;
+    }
+</style>
+
+
+<div class="page-wrapper">
+    <div class="back-button">
+        <button onclick="history.back()">← Quay lại</button>
+    </div>
+
+    <div class="user-detail-content">
+        <div class="user-avatar-container">
+            <img src="~/images/@Model.Avatar" alt="Avatar của @Model.FullName" class="user-avatar" />
+        </div>
+
+        <div class="user-info">
+            <h2 class="section-title">@Model.FullName</h2>
+            <ul>
+                <li><strong>Email:</strong> @Model.Email</li>
+                <li><strong>Số điện thoại:</strong> @Model.PhoneNumber</li>
+                <li><strong>Vai trò:</strong> @Model.Role</li>
+                <li><strong>Giới tính:</strong> @(Model.Gender ? "Nam" : "Nữ")</li>
+                <li><strong>Ngày sinh:</strong> @Model.Birthday.ToString("dd/MM/yyyy")</li>
+                <li><strong>Ngày tạo tài khoản:</strong> @Model.CreatedAt?.ToString("dd/MM/yyyy")</li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -10,9 +10,9 @@ namespace ChickenFilmV2.ViewModelManager
 
         public int AuditoriumId { get; set; }
 
-        public DateOnly? ShowDate { get; set; }
+        public DateTime? ShowDate { get; set; }
 
-        public TimeOnly ShowTime1 { get; set; }
+        public TimeOnly Showtimes { get; set; }
 
         public string? Status { get; set; }
 

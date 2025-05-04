@@ -1,0 +1,154 @@
+﻿@model ChickenFilmV2.Models.Theater
+
+@{
+    ViewData["Title"] = "Thêm rạp chiếu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    /* General Styling for Admin Page */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin-left: 470px;
+        padding: 0;
+        margin-top: 130px;
+        max-width: 1400px;
+    }
+
+    /* Container Style */
+    .container {
+        margin-left: 370px; /* Adjust margin for sidebar */
+        padding-top: 50px;
+        width: 75%; /* Adjust width */
+    }
+
+    /* Form Styling */
+    form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    /* Form Group Styling */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+    /* Input Styling */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    textarea.form-control {
+        height: 150px; /* Set height for description */
+        resize: vertical;
+    }
+
+    /* Button Styling */
+    button {
+        margin-top: 20px;
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    /* Header Styling */
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Title, Genre, Rating, etc. inputs should be evenly spaced */
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="date"],
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    /* Style the buttons for "Save Movie" */
+    button[type="submit"] {
+        background-color: deepskyblue;
+        border-radius: 10px;
+        font-size: 16px;
+        width: 100%;
+        padding: 12px;
+        cursor: pointer;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #006bb3;
+        }
+
+    /* Style the form container */
+    .form-container {
+        margin-top: 40px;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 768px) {
+        .container
+
+    {
+        margin-left: 0;
+        padding: 15px;
+        width: 100%;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    }
+</style>
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CreateTheater" method="post">
+    <div class="form-group">
+        <label for="TheaterName">Tên rạp</label>
+        <input type="text" class="form-control" id="TheaterName" name="TheaterName" value="@Model.TheaterName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Location">Địa chỉ</label>
+        <input type="text" class="form-control" id="Location" name="Location" value="@Model.Location" required />
+    </div>
+
+    <div class="form-group">
+        <label for="MapUrl">Map URL (tuỳ chọn)</label>
+        <input type="text" class="form-control" id="MapUrl" name="MapUrl" value="@Model.MapUrl" />
+    </div>
+
+    <div class="form-group">
+        <label for="TotalTheaters">Tổng số rạp con</label>
+        <input type="number" class="form-control" id="TotalTheaters" name="TotalTheaters" value="@Model.TotalTheaters" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm rạp</button>
+</form>

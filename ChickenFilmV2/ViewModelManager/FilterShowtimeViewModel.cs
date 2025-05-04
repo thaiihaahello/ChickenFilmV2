@@ -3,7 +3,7 @@
     public class FilterShowtimeViewModel
     {
         public List<ShowtimeViewModel> Showtime { get; set; } = new();
-        public DateOnly? SearchShowDate { get; set; }
+        public DateTime? SearchShowDate { get; set; }
         public string? SearchAuditoriumName { get; set; }
 
         public List<string>? AuditoriumName { get; set; }

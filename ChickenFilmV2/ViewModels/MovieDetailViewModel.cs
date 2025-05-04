@@ -1,10 +1,10 @@
 ﻿using ChickenFilmV2.Models;
+using ChickenFilmV2.ViewModelManager;
 
 namespace ChickenFilmV2.ViewModels
 {
     public class MovieDetailViewModel
     {
-        // Thông tin cơ bản của phim
         public int MovieId { get; set; }
         public string Title { get; set; }
         public string PosterUrl { get; set; }
@@ -17,16 +17,19 @@ namespace ChickenFilmV2.ViewModels
         public string Country { get; set; }
         public string Description { get; set; }
 
-        // Danh sách ngày có suất chiếu
         public List<DateTime> ShowDates { get; set; }
-
-        // Danh sách suất chiếu nhóm theo ngày (mỗi ngày có nhiều giờ chiếu)
         public List<ShowtimeByDateViewModel> GroupedShowtimesByDate { get; set; }
+        public List<ShowtimeViewModel> Showtimes { get; set; }
     }
   
     public class ShowtimeByDateViewModel
     {
-        public DateTime Date { get; set; }  // Ngày chiếu
-        public List<string> TimeSlots { get; set; }  // Danh sách giờ chiếu dạng "HH:mm"
+        public DateTime Date { get; set; } 
+        public List<string> TimeSlots { get; set; }  
+    }
+    public class ShowtimeFormatGroup
+    {
+        public string Format { get; set; }
+        public List<string> TimeSlots { get; set; }
     }
 }

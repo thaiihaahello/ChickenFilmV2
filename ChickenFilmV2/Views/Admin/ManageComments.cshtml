@@ -1,0 +1,65 @@
+﻿@model List<ChickenFilmV2.Models.Comment>
+
+@{
+    ViewData["Title"] = "Quản lý bình luận";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .page-wrapper {
+        max-width: 1400px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+        margin-left: 300px;
+        margin-top: 100px;
+    }
+
+        .page-wrapper h3 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+    .table th, .table td {
+        vertical-align: middle;
+        font-size: 15px;
+    }
+</style>
+
+<div class="page-wrapper">
+    <h3>Danh sách bình luận</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Người dùng</th>
+                <th>Email</th>
+                <th>Phim</th>
+                <th>Nội dung</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.CommentId</td>
+                    <td>@c.User?.FullName</td>
+                    <td>@c.User?.Email</td>
+                    <td>@c.Movie?.Title</td>
+                    <td>@c.Content</td>
+                    <td>@c.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <a asp-action="DeleteComment" asp-route-id="@c.CommentId" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Bạn có chắc muốn xóa bình luận này không?');">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-secondary mt-3" href="@Url.Action("Index", "Admin")">← Quay lại trang chủ</a>
+</div>

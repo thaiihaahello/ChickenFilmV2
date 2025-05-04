@@ -153,17 +153,17 @@
             }
         </div>
 
-        @foreach (var formatGroup in Model.Showtimes)
-        {
-            <div class="format">
-                <div class="format-name fw-bold mb-2">@formatGroup.Format</div>
-                <div class="time-slots d-flex gap-2 flex-wrap">
-                    @foreach (var time in formatGroup.TimeSlots)
-                    {
-                        <a href="#" class="btn btn-outline-danger time-slot">@time</a>
-                    }
-                </div>
-            </div>
-        }
+        @* @foreach (var formatGroup in Model.Showtimes) *@
+        @* { *@
+        @*     <div class="format"> *@
+        @*         <div class="format-name fw-bold mb-2">@formatGroup.Format</div> *@
+        @*         <div class="time-slots d-flex gap-2 flex-wrap"> *@
+        @*             @foreach (var time in formatGroup.TimeSlots) *@
+        @*             { *@
+        @*                 <a href="#" class="btn btn-outline-danger time-slot">@time</a> *@
+        @*             } *@
+        @*         </div> *@
+        @*     </div> *@
+        @* } *@
     </div>
 </div>

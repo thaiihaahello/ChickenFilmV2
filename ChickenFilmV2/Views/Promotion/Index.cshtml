@@ -41,7 +41,7 @@
 									<td>@(promo.UsedCount ?? 0)</td>
 									<td>@(promo.MinOrderValue.HasValue ? promo.MinOrderValue.Value.ToString("N0") : "0")</td>
 									<td>@((promo.IsActive.HasValue && promo.IsActive.Value) ? "Hoạt động" : "Hết hạn")</td>
-									<td>@promo.StartDate.ToDateTime(new TimeOnly(0, 0)).ToString("dd/MM/yyyy") - @promo.EndDate.ToDateTime(new TimeOnly(0, 0)).ToString("dd/MM/yyyy")</td>
+									@* <td>@promo.StartDate.ToDateTime(new TimeOnly(0, 0)).ToString("dd/MM/yyyy") - @promo.EndDate.ToDateTime(new TimeOnly(0, 0)).ToString("dd/MM/yyyy")</td> *@
 									<td>
 										<a class="btn btn-primary btn-sm" href="/Promotion/Update/@promo.PromotionId">Sửa</a>
 										<form asp-action="Delete" asp-controller="Promotion" method="post" style="display:inline;">
