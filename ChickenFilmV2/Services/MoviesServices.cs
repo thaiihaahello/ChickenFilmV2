@@ -17,14 +17,15 @@ namespace ChickenFilmV2.Services
             var movie = _context.Movies.FirstOrDefault(m => m.MovieId == model.MovieId);
             if (movie == null) return false;
 
-            movie.EndDate = model.EndDate;
+            movie.EndDate = model.EndDate ?? default;
             _context.SaveChanges();
 
             return true;
         }
+
         public List<Movie> GetAllMovies()
         {
-            return _context.Movies.ToList();
+            return _context.Movies.OrderByDescending(m => m.MovieId).ToList();
         }
 
         public Movie GetMovieById(int id)

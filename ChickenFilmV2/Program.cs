@@ -1,11 +1,8 @@
 using ChickenFilmV2.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-
 using ChickenFilmV2.Contacts;
-using ChickenFilmV2.Models;
 using ChickenFilmV2.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChickenFilmV2
 {
@@ -18,9 +15,12 @@ namespace ChickenFilmV2
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<MovieDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                sqlOptions => sqlOptions.CommandTimeout(180)));
             builder.Services.AddScoped<IMoviesServices, MoviesServices>();
             builder.Services.AddScoped<IAuditoriumServices, AuditoriumServices>();
+            builder.Services.AddScoped<IShowtimesServices, ShowtimesServices>();
+            builder.Services.AddScoped<ISeatsServices, SeatsServices>();
 
             // Add authentication using Cookie
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -32,10 +32,6 @@ namespace ChickenFilmV2
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                     options.SlidingExpiration = true;
                 });
-
-
-            builder.Services.AddDbContext<MovieDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
