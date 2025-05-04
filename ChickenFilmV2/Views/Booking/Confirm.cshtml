@@ -1,0 +1,13 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ChickenFilmV2.Models.Booking
+@{
+    ViewData["Title"] = "Xác nhận đặt vé";
+}
+
+<h2>Xác nhận đặt vé thành công!</h2>
+<p>Mã đặt vé: @Model.BookingId</p>
+<p>Phim: @Model.Showtime.Movie.Title</p>
+@($"{Model.Showtime.ShowDate?.ToString("dd/MM/yyyy")} {Model.Showtime.ShowTime1.ToString("HH\\:mm")}")
+<p>Ghế: @string.Join(", ", Model.SeatBookings.Select(sb => sb.Seat.SeatNumber))</p>

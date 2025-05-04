@@ -4,6 +4,7 @@ using ChickenFilmV2.ViewModels;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ChickenFilmV2.Controllers
 {
@@ -94,11 +95,14 @@ namespace ChickenFilmV2.Controllers
             {
                 return NotFound();
             }
+
             // Truyền thông tin về phim, suất chiếu, rạp vào ViewBag
             ViewBag.MovieTitle = showtime.Movie.Title;
             ViewBag.MoviePoster = showtime.Movie.PosterUrl;
             ViewBag.Showtime = showtime.ShowTime1;
             ViewBag.TheaterName = showtime.Auditorium.Theater.TheaterName;
+            ViewBag.AuditoriumId = showtime.Auditorium.AuditoriumId;  // Thêm AuditoriumId vào ViewBag
+
             var seats = (from seat in _context.Seats
                          where seat.AuditoriumId == showtime.AuditoriumId
                          join pricing in _context.AuditoriumSeatPricings
@@ -120,14 +124,126 @@ namespace ChickenFilmV2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSeatPrices(int auditoriumId)
         {
-            // Lấy giá ghế theo auditoriumId
+            // Lấy giá ghế theo loại và auditoriumId (lọc bỏ trùng lặp)
             var seatPrices = await _context.AuditoriumSeatPricings
                 .Where(p => p.AuditoriumId == auditoriumId)
+                .GroupBy(p => p.SeatType) // Nhóm theo loại ghế
+                .Select(g => new
+                {
+                    SeatType = g.Key,
+                    Price = g.FirstOrDefault().Price // Lấy giá của một loại ghế (không bị trùng)
+                })
                 .ToListAsync();
 
-            // Trả về giá ghế dưới dạng JSON
-            return Json(seatPrices);
+            return Json(seatPrices); // Trả về giá ghế dưới dạng JSON
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmBooking(int showtimeId, List<int> selectedSeatIds)
+        {
+            // Lấy UserId từ Claims
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account"); // Nếu chưa đăng nhập, chuyển đến trang đăng nhập
+            }
+
+            // Chuyển UserId từ string sang int
+            var userIdInt = int.Parse(userId);
+
+            // Lấy thông tin suất chiếu từ cơ sở dữ liệu
+            var showtime = await _context.Showtimes
+                .Include(s => s.Movie)
+                .Include(s => s.Auditorium)
+                .ThenInclude(a => a.Theater)
+                .FirstOrDefaultAsync(s => s.ShowtimeId == showtimeId);
+
+            if (showtime == null)
+            {
+                return NotFound(); // Nếu không tìm thấy suất chiếu
+            }
+
+            Console.WriteLine($"ShowtimeId: {showtimeId}");
+            Console.WriteLine("Selected Seat IDs: " + string.Join(", ", selectedSeatIds));
+
+
+            // Kiểm tra ghế đã chọn hợp lệ
+            if (selectedSeatIds == null || !selectedSeatIds.Any())
+            {
+                return BadRequest("Chưa chọn ghế.");
+            }
+
+            // Kiểm tra xem ghế đã được đặt chưa
+            foreach (var seatId in selectedSeatIds)
+            {
+                var seat = await _context.Seats.FirstOrDefaultAsync(s => s.SeatId == seatId);
+                if (seat == null)
+                {
+                    return BadRequest("Ghế không hợp lệ.");
+                }
+
+                // Kiểm tra xem ghế có bị trùng với các ghế đã đặt chưa
+                var existingBooking = await _context.SeatBookings
+                    .FirstOrDefaultAsync(sb => sb.SeatId == seatId && sb.Booking.ShowtimeId == showtimeId);
+
+                if (existingBooking != null)
+                {
+                    return BadRequest($"Ghế {seat.SeatNumber} đã được đặt.");
+                }
+            }
+
+            // Tạo một đối tượng Booking mới
+            var booking = new Booking
+            {
+                UserId = userIdInt,
+                ShowtimeId = showtimeId,
+                CreatedAt = DateTime.Now
+            };
+
+            _context.Bookings.Add(booking);
+            await _context.SaveChangesAsync();  // Lưu booking để có BookingId
+
+            // Tiến hành lưu SeatBooking (mối quan hệ giữa booking và seat)
+            foreach (var seatId in selectedSeatIds)
+            {
+                var seatBooking = new SeatBooking
+                {
+                    BookingId = booking.BookingId,
+                    SeatId = seatId
+                };
+
+                _context.SeatBookings.Add(seatBooking);
+            }
+
+            await _context.SaveChangesAsync();  // Lưu SeatBooking
+
+            // Chuyển hướng đến trang xác nhận đặt vé
+            return RedirectToAction("BookingConfirmation", new { bookingId = booking.BookingId });
+        }
+
+
+
+        public IActionResult BookingConfirmation(int bookingId)
+        {
+            // Lấy thông tin đơn đặt vé từ database để hiển thị
+            var booking = _context.Bookings
+                .Include(b => b.SeatBookings).ThenInclude(sb => sb.Seat)
+                .Include(b => b.Showtime).ThenInclude(s => s.Movie)
+                .Include(b => b.Showtime).ThenInclude(s => s.Auditorium)
+                .FirstOrDefault(b => b.BookingId == bookingId);
+
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            return View(booking); // Truyền dữ liệu sang View xác nhận
+        }
+
+
+
 
         [HttpPost]
         public IActionResult ApplyPromoCode(string promoCode, decimal totalAmount)
@@ -185,6 +301,7 @@ namespace ChickenFilmV2.Controllers
                 .ToList();
 
 
+
             // Truyền thông tin vào ViewBag
             ViewBag.MovieTitle = showtime.Movie.Title;
             ViewBag.MoviePoster = showtime.Movie.PosterUrl;
@@ -192,7 +309,7 @@ namespace ChickenFilmV2.Controllers
             ViewBag.TheaterName = showtime.Auditorium.Theater.TheaterName;
             ViewBag.Seats = seats;
             ViewBag.TotalAmount = totalAmount;
-            ViewBag.PromoMessage = string.Empty; 
+            ViewBag.PromoMessage = string.Empty; // Không có thông báo mã khuyến mãi
 
             
             return View();

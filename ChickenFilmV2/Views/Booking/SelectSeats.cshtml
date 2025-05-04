@@ -43,6 +43,7 @@
                 </div>
 
                 <!-- Chọn ghế -->
+                <!-- Chọn ghế -->
                 <div class="card p-3 mt-3">
                     <h5>Chọn ghế</h5>
                     <div class="screen text-center mb-2">Màn hình</div>
@@ -121,14 +122,22 @@
     </div>
 
     <!-- Form ẩn để gửi dữ liệu -->
-    <form id="seatForm" method="post" asp-controller="Booking" asp-action="Payment">
+    <!-- Form ẩn để gửi dữ liệu -->
+    <form id="seatForm" method="post" asp-controller="Booking" asp-action="ConfirmBooking">
         <input type="hidden" name="showtimeId" value="@showtimeId" />
         <input type="hidden" name="selectedSeats" id="selectedSeatsInput" />
         <input type="hidden" name="totalAmount" id="totalAmountInput" />
+        <input type="hidden" id="auditoriumId" value="@ViewBag.AuditoriumId" />
 
     </form>
+
     </div>
 
     @section Scripts {
         <script src="~/js/SeatSelection.js"></script>
     }
+
+<script>
+    const auditoriumId = @ViewBag.AuditoriumId;
+    fetchSeatPrices(auditoriumId); // Gọi API để lấy giá ghế
+</script>

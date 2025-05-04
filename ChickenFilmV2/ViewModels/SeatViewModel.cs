@@ -6,9 +6,7 @@
         public string SeatNumber { get; set; }
         public string? SeatType { get; set; }
         public bool IsAvailable { get; set; }
-
-        public decimal Price { get; set; }
-
+        public decimal Price { get; set; } // Đảm bảo giá luôn có giá trị hợp lý
     }
 
 }

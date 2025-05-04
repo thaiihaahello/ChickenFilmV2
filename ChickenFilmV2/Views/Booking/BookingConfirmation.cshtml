@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ChickenFilmV2.Models.Booking
+@{
+    ViewData["Title"] = "Xác nhận đặt vé";
+    Layout = "~/Views/Shared/_Layout_Main.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h2 class="text-center text-success mb-4">ĐẶT VÉ THÀNH CÔNG!</h2>
+
+        <h5>Thông tin đặt vé</h5>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Mã đặt vé:</strong> @Model.BookingId</li>
+            <li class="list-group-item"><strong>Phim:</strong> @Model.Showtime.Movie.Title</li>
+            <li class="list-group-item">
+                <strong>Suất chiếu:</strong> @Model.Showtime.ShowDate.Value.ToString("dd/MM/yyyy") @Model.Showtime.ShowTime1.ToString("HH:mm")
+            </li>
+
+            <li class="list-group-item"><strong>Phòng chiếu:</strong> @Model.Showtime.Auditorium.AuditoriumName</li>
+            <li class="list-group-item">
+                <strong>Ghế:</strong>
+                @string.Join(", ", Model.SeatBookings.Select(sb => sb.Seat.SeatNumber))
+            </li>
+            <li class="list-group-item">
+                <strong>Suất chiếu:</strong> @(Model.Showtime.ShowDate?.ToString("dd/MM/yyyy") ?? "Ngày không xác định") @Model.Showtime.ShowTime1.ToString("HH:mm")
+            </li>
+        </ul>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary">Về trang chủ</a>
+            <a href="/Booking/MyBookings" class="btn btn-outline-secondary">Xem lịch sử đặt vé</a>
+        </div>
+    </div>
+</div>
