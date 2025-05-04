@@ -1,0 +1,45 @@
+﻿@model ChickenFilmV2.ViewModelManager.ShowtimeViewModel
+
+<form method="post" asp-action="CreateShowtime" asp-controller="Showtimes" id="createShowtimeForm">
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.AuditoriumId)
+
+    <div class="modal fade" id="createShowtimeModal" tabindex="-1" aria-labelledby="createShowtimeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createShowtimeModalLabel">Tạo suất chiếu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Phim chiếu</label>
+                        @Html.DropDownListFor(model => model.MovieId, Model.MovieList, "--Chọn phim--", new { @class = "form-select" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phòng chiếu</label>
+                        @Html.DropDownListFor(model => model.AuditoriumId, Model.AuditoriumList, "--Chọn phòng chiếu--", new { @class = "form-select" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ngày chiếu</label>
+                        <input type="date" asp-for="ShowDate" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-danger fw-bold">*Thời gian chiếu</label>
+                        <input type="time" asp-for="ShowTime1" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Tạo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
